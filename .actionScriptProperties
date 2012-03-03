@@ -5,7 +5,6 @@
     <libraryPath defaultLinkType="1">
       <libraryPathEntry kind="4" path=""/>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-      <libraryPathEntry kind="3" linkType="1" path="/FlexComponents/lib/FlexComponents.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -17,7 +16,8 @@
     <application path="ColumnChart.mxml"/>
     <application path="CandlestickChart.mxml"/>
     <application path="Test3_2.mxml"/>
-    <application path="column3DChart.mxml"/>
+    <application path="HistogramSolidSkin.mxml"/>
+
   </applications>
   <modules/>
   <buildCSSFiles/>
