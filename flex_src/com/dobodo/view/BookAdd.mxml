@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" width="562" height="366" horizontalAlign="left" title="添加图书" layout="vertical">
+    <mx:Script>
+        <![CDATA[
+            import com.dobodo.event.AddBookEvent;
+            import com.adobe.cairngorm.control.CairngormEventDispatcher;
+            import com.dobodo.vo.BookVO;
+            import mx.collections.ArrayCollection;
+            
+            [Bindable]
+            public var bookAC:ArrayCollection = new ArrayCollection();
+            public function addBook():void
+            {
+                var bookVO:BookVO = new BookVO();
+                bookVO.bookName = this.bookName.text;
+                bookVO.bookAuthor = this.bookAuthor.text;
+                bookVO.bookPrice = this.bookPrice.text;
+                
+                var event:AddBookEvent = new AddBookEvent(bookVO);
+                CairngormEventDispatcher.getInstance().dispatchEvent(event);
+                
+                this.bookName.text = "";
+                this.bookAuthor.text = "";
+                this.bookPrice.text = "";
+            }
+        ]]>
+    </mx:Script>
+    
+    <mx:HBox width="100%" height="258" horizontalScrollPolicy="off">
+
+		<mx:VBox width="250">
+            <mx:Form width="233" height="212">
+                <mx:FormItem label="书名：">
+                    <mx:TextInput width="118" id="bookName"/>
+                </mx:FormItem>
+                <mx:FormItem label="作者：">
+                    <mx:TextInput width="118" id="bookAuthor"/>
+                </mx:FormItem>
+                <mx:FormItem label="单价：">
+                    <mx:TextInput width="119" id="bookPrice"/>
+                </mx:FormItem>
+                <mx:Button label="添加" click="this.addBook()"/>
+            </mx:Form>
+        </mx:VBox>
+        <mx:VBox>
+            <mx:DataGrid width="263" height="208" dataProvider="{bookAC}">
+                <mx:columns>
+                    <mx:DataGridColumn headerText="书名" dataField="bookName"/>
+                    <mx:DataGridColumn headerText="作者" dataField="bookAuthor"/>
+                    <mx:DataGridColumn headerText="单价" dataField="bookPrice"/>
+                </mx:columns>
+            </mx:DataGrid>
+        </mx:VBox>
+    </mx:HBox>
+</mx:Panel>

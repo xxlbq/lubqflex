@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:control="com.dobodo.controller.*"
+                xmlns:view="com.dobodo.view.*"
+                horizontalAlign="center" verticalAlign="middle" fontSize="13">
+    <mx:Script>
+        <![CDATA[
+            import com.dobodo.model.ModelLocator;        
+            [Bindable]
+            public var model:ModelLocator = ModelLocator.getInstance() ;
+        ]]>
+    </mx:Script>   
+     <control:AddBookControl id="controller"/>
+     <view:BookAdd id="addBookView" bookAC="{model.BookAC}"/>    
+</mx:Application>

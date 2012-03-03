@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- charts/BasicPie.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+  <mx:Script><![CDATA[
+     import mx.collections.ArrayCollection;
+     [Bindable]
+     public var expenses:ArrayCollection = new ArrayCollection([
+        {Expense:"Taxes", Amount:2000},
+        {Expense:"Rent", Amount:1000},
+        {Expense:"Bills", Amount:100},
+        {Expense:"Car", Amount:450},
+        {Expense:"Gas", Amount:100},
+        {Expense:"Food", Amount:200}
+     ]);
+  ]]></mx:Script>
+	<mx:Panel title="Pie Chart">
+		<mx:PieChart id="myChart"
+					 dataProvider="{expenses}"
+					 showDataTips="true">
+			<mx:series>
+				<mx:PieSeries field="Amount"
+							  nameField="Expense"
+							  labelPosition="callout"/>
+			</mx:series>
+		</mx:PieChart>
+		<mx:Legend dataProvider="{myChart}"/>
+	</mx:Panel>
+</mx:Application>

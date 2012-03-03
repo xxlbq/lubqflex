@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<!--fusionchart 组件 完成 3D 效果 的 柱状 ，饼壮图-->
+
+
+
+
+
+
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+
+layout="absolute" backgroundGradientColors="[#F3A1A1, #B3C860]"
+
+width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="[1.0, 1.0]">
+
+
+
+<mx:Script>
+
+	<![CDATA[
+
+		
+
+			import mx.events.ItemClickEvent;
+
+			import mx.collections.ArrayCollection;
+
+			import mx.controls.Alert;
+
+			
+
+			[Bindable]
+
+			var ac:ArrayCollection;
+
+			[Bindable]
+
+			var acNew:ArrayCollection;
+
+			
+
+			//初始化函数
+
+			function initApp():void 
+
+			{
+
+				//在程序初始化时，定义数组，作为饼图的初始值
+
+				ac=new ArrayCollection([
+
+					{name: "value1",num: 10},
+
+					{name: "value2",num: 10},
+
+					{name: "value3",num: 10}
+
+				]);
+
+				
+
+				//把ac作为饼图的数据源
+
+				piechart1.dataProvider=ac;
+
+			}
+
+			
+
+			//取得当前三个滑杆的值，生成数组，然后重新作为饼图的数据源。注：三个滑杆都调用该函数
+
+			function test():void
+
+			{
+
+				acNew=new ArrayCollection([
+
+					{name: "value1",num: hs1.value},
+
+					{name: "value2",num: hs2.value},
+
+					{name: "value3",num: hs3.value}
+
+				]);
+
+				
+
+				piechart1.dataProvider=acNew;		
+
+			}
+
+
+
+		//显示标签时的回调函数
+
+		private function showLabel(data:Object, field:String, index:Number, percentValue:Number):String {
+
+			//返回的值，就是饼图要显示的标签。这里用当前滑杆的值（data.num）除以三个滑杆当前值的总和，得出百分比
+
+			//注：data.num表示的就是PieSeries组件对象的field属性，也就是当前滑杆的值
+			trace(" fire  show label method ... ");
+            return int(data.num/(hs1.value+hs2.value+hs3.value)*100) + "%";
+
+        }
+
+
+
+
+
+	]]>
+
+</mx:Script>
+
+	<mx:PieChart x="10" y="78" id="piechart1" dataProvider="{ac}" showDataTips="false">
+
+		<mx:series>
+
+			<!--PieSeries组件的各个属性：-->
+
+			<!--labelFunction属性：指定显示标签时的回调函数，这里指定的是showLabel函数-->
+
+			<!--nameField属性：指定饼图各部分名称与所绑定的数组对应的字段，本例中对应数组的name字段，也就是value1、value2和value3-->
+
+			<!--field属性：指定饼图各部分值与所绑定的数组对应的字段，本例中对应数组的num字段，也就是hs1.value、hs2.value和hs3.value-->
+
+			<mx:PieSeries displayName="Series 1" labelFunction="showLabel" labelPosition="outside" nameField="name" field="num"/>
+
+		</mx:series>
+
+	</mx:PieChart>
+
+	<mx:Legend dataProvider="{piechart1}"/>
+
+	
+
+	<!--HSlider组件的主要属性：-->
+
+	<!--liveDragging属性：布尔型。HSlider的change事件是当移动滑杆之后触发的，如果想要移动滑杆的时候就不断的触发，可以将该属性值设置为true，默认为false-->
+
+	<!--snapInterval属性：数值型。默认移动滑杆时，滑杆的当前值精确到小数点后两位。其实我们通常没有必要用这么精确的值。可以通过设置该属性，来决定移动滑杆时，每移动一次的间隔值。怎么感觉越说越复杂了，建议大家试验一下就明白了^_^-->
+
+	<!--tickInterval属性：数值型。滑杆上刻度的间隔值。例如：滑杆最大值是100，如果将该属性设置成50的话，就会显示3个刻度值。为什么显示3个？试一下就知道了-->
+
+	<!--minimum/maximum属性：数值型。这两个相信大家一看就明白了，设置最小值和最大值的属性。-->
+
+	<mx:HSlider x="418" y="198" id="hs1" value="10" liveDragging="true" snapInterval="1" tickInterval="25" minimum="0" maximum="100" change="test()"/>
+
+	<mx:HSlider x="418" y="313" id="hs3" value="10" liveDragging="true" snapInterval="1" tickInterval="25" minimum="0" maximum="100" change="test()"/>
+
+	<mx:HSlider x="418" y="257" id="hs2" value="10" liveDragging="true" snapInterval="1" tickInterval="25" minimum="0" maximum="100" change="test()"/>
+
+	<mx:Label x="418" y="172" text="value1:" width="58"/>
+
+	<mx:Label x="418" y="231" text="value2:" width="58"/>
+
+	<mx:Label x="418" y="287" text="value3:" width="58"/>
+
+</mx:Application> 
+
