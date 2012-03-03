@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc" width="600" height="600" >
+
+<mx:Script>
+<![CDATA[
+  [Bindable] public var medals:Array = [ 
+{country: "USA", gold: 50, silver: 25, bronze:40},
+{country: "China", gold: 48, silver: 40, bronze:25},
+{country: "Russia", gold: 38, silver: 32, bronze:45},
+{country: "Germany", gold: 35, silver: 25, bronze:39},
+{country: "India", gold: 14, silver: 15, bronze:28}
+];
+
+
+]]>
+</mx:Script>
+
+        <mx:Style>
+                @font-face
+                {
+                   font-family: MyArial;
+                   src: local("Arial");
+                }
+                Column3DChart {
+                        font-size: 14;
+                        font-family: MyArial;
+                }
+        </mx:Style>
+
+     <mx:Panel title="Charts" width="100%" height="100%">
+      <fc:Column3DChart id="mychart" type="clustered" angleX="30" angleY="30" height="100%" width="100%" >
+
+        <fc:horizontalAxis>
+          <mx:CategoryAxis dataProvider="{medals}" categoryField="country" />
+        </fc:horizontalAxis>
+
+		<fc:verticalAxis>
+			<mx:LinearAxis minimum="0" maximum="70"/>
+		</fc:verticalAxis>
+
+        <fc:series>
+          <mx:Array>
+            <fc:Column3DSeries dataProvider="{medals}" yField="gold" displayName="Gold">
+            	<fc:fill>
+            		<mx:SolidColor color="#EEEE00"/>
+            	</fc:fill>            
+            </fc:Column3DSeries>
+            <fc:Column3DSeries  dataProvider="{medals}" yField="silver" displayName="Silver">
+            	<fc:fill>
+            		<mx:SolidColor color="#CCCCFF"/>
+            	</fc:fill>            
+            </fc:Column3DSeries>
+            <fc:Column3DSeries  dataProvider="{medals}" yField="bronze" displayName="Bronze">
+            	<fc:fill>
+            		<mx:SolidColor color="#CC9900"/>
+            	</fc:fill>            
+            </fc:Column3DSeries>
+          </mx:Array>
+        </fc:series>
+      </fc:Column3DChart>
+
+    <mx:Legend dataProvider="{mychart}"/>
+    </mx:Panel>
+
+</mx:Application>
