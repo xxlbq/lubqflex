@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties mainApplicationPath="CairngormDemo.mxml" version="3">
+  <compiler additionalCompilerArguments="-services &quot;../WebContent/WEB-INF/flex/services-config.xml&quot; -locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="WebContent" rootURL="http://localhost:9080/" sourceFolderPath="flex_src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
+    <libraryPath defaultLinkType="1">
+      <libraryPathEntry kind="4" path=""/>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <applications>
+    <application path="Test.mxml"/>
+    <application path="CairngormDemo.mxml"/>
+    <application path="AreaChart.mxml"/>
+    <application path="Test3.mxml"/>
+    <application path="ColumnChart.mxml"/>
+    <application path="CandlestickChart.mxml"/>
+    <application path="Test3_2.mxml"/>
+    <application path="HistogramSolidSkin.mxml"/>
+
+  </applications>
+  <modules/>
+  <buildCSSFiles/>
+</actionScriptProperties>

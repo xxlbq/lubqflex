@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				width="800"
+				height="300"
+				layout="absolute"
+				creationComplete="initApp()" 
+				xmlns:chart="com.dobodo.view.*">
+	<mx:Style>
+		/* CSS file */
+Application
+{
+	backgroundColor:#eef1f4;	
+}
+
+Panel 
+{
+	   borderStyle: solid;
+	   borderColor: #dbe2e8;
+	   borderThickness: 2;
+	   roundedBottomCorners: false;
+	   cornerRadius: 1;
+	   headerHeight: 27;
+	   backgroundAlpha: 1;
+	   dropShadowEnabled: true;
+	   shadowDistance: 1;
+	   shadowDirection: center;
+	   titleStyleName: "mypanelTitle";
+}
+
+.mypanelTitle 
+{
+	   letterSpacing: 1;
+	   textAlign: center;
+	   fontSize: 14;
+}
+.legendItem
+{
+	 fontSize:14;
+   	 color:#577ba1;
+   	 fontFamily: Arial;
+   	 fill:#577ba1;
+   	 fontWeight: normal;
+}
+.legendItemArea
+{
+	 fontSize:14;
+   	 fontFamily: Arial;
+}
+ProgressBar {
+   borderColor: #cccccc;
+   barColor: #8ec0e2;
+   trackColors: #eae8e8, #efeeec;
+   color: #000000;
+   paddingLeft: 6;
+   paddingRight: 5;
+   textIndent: 0;
+   letterSpacing: 1;
+   trackHeight: 20;
+   verticalGap: 5;
+   fontFamily: Arial;
+   fontSize: 10;
+   fontWeight: bold;
+}
+
+	</mx:Style>
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			public function initApp():void
+			{
+//				boundChart(
+//				{data: [25], date: [2003], date_format: "m.d", title: "自定义图例样式", xtitle: "ProgrammaticSkin Demo"}
+//				, "统计图例");
+				
+								boundChart(
+				{data: [25, 36, 77, 65, 25, 35], date: [2003, 2004, 2005, 2006, 2007, 2008], date_format: "m.d", title: "自定义图例样式", xtitle: "ProgrammaticSkin Demo"}
+				, "统计图例");
+				
+			}
+			/*
+			 * cData:   		图片数据
+			 * cleng:   		页脚
+			 * showAllTrip:		是否显示所有数据标记
+			 */
+			function boundChart(cData:Object,cleng:String,showAllTrip:Boolean=false):void
+			{
+				var o:* = cData;
+				var dataCollection:ArrayCollection = getArrayCollection(o.date,o.data);
+				//chart1.init(dataCollection,cleng,o.title,o.xtitle,showAllTrip);
+				chart2.init(dataCollection,cleng,o.title,o.xtitle,showAllTrip);
+			}
+			public  function getArrayCollection(arrLabels:Array,arrValues:Array):ArrayCollection
+			{
+				var result:ArrayCollection = null;
+				var length:int = arrLabels.length;
+				if(arrLabels != null && arrValues != null &&  length== arrValues.length)
+				{
+					result = new ArrayCollection();
+					for(var i:int=0;i<length;i++)
+					{
+						result.addItem({label:arrLabels[i], value:Number(arrValues[i])});
+					}
+				}
+				return result;
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox>
+<!--		<mx:Panel title="圆柱图"
+				  width="395"
+				  height="300">
+			<chart:ClumnChart id="chart1">
+
+			</chart:ClumnChart>
+		</mx:Panel>-->
+		<mx:Panel title="立方图"
+				  width="395"
+				  height="300">
+			<chart:SolidChart id="chart2">
+
+			</chart:SolidChart>
+		</mx:Panel>
+	</mx:HBox>
+</mx:Application>
