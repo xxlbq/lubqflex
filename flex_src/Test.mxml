@@ -10,26 +10,25 @@
 
 
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				backgroundGradientColors="[#F3A1A1, #B3C860]"
+				width="709"
+				height="488"
+				creationComplete="initApp()"
+				backgroundGradientAlphas="[1.0, 1.0]">
 
-layout="absolute" backgroundGradientColors="[#F3A1A1, #B3C860]"
-
-width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="[1.0, 1.0]">
 
 
+	<mx:Script>
 
-<mx:Script>
-
-	<![CDATA[
-
-		
-
+		<![CDATA[
 			import mx.events.ItemClickEvent;
 
 			import mx.collections.ArrayCollection;
 
 			import mx.controls.Alert;
 
-			
+
 
 			[Bindable]
 
@@ -39,11 +38,11 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 			var acNew:ArrayCollection;
 
-			
+
 
 			//初始化函数
 
-			function initApp():void 
+			public function initApp():void
 
 			{
 
@@ -51,15 +50,15 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 				ac=new ArrayCollection([
 
-					{name: "value1",num: 10},
+					{name: "value1", num: 10},
 
-					{name: "value2",num: 10},
+					{name: "value2", num: 10},
 
-					{name: "value3",num: 10}
+					{name: "value3", num: 10}
 
-				]);
+					]);
 
-				
+
 
 				//把ac作为饼图的数据源
 
@@ -67,7 +66,7 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 			}
 
-			
+
 
 			//取得当前三个滑杆的值，生成数组，然后重新作为饼图的数据源。注：三个滑杆都调用该函数
 
@@ -77,43 +76,43 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 				acNew=new ArrayCollection([
 
-					{name: "value1",num: hs1.value},
+					{name: "value1", num: hs1.value},
 
-					{name: "value2",num: hs2.value},
+					{name: "value2", num: hs2.value},
 
-					{name: "value3",num: hs3.value}
+					{name: "value3", num: hs3.value}
 
-				]);
+					]);
 
-				
 
-				piechart1.dataProvider=acNew;		
+
+				piechart1.dataProvider=acNew;
 
 			}
 
 
 
-		//显示标签时的回调函数
+			//显示标签时的回调函数
 
-		private function showLabel(data:Object, field:String, index:Number, percentValue:Number):String {
+			private function showLabel(data:Object, field:String, index:Number, percentValue:Number):String
+			{
 
-			//返回的值，就是饼图要显示的标签。这里用当前滑杆的值（data.num）除以三个滑杆当前值的总和，得出百分比
+				//返回的值，就是饼图要显示的标签。这里用当前滑杆的值（data.num）除以三个滑杆当前值的总和，得出百分比
 
-			//注：data.num表示的就是PieSeries组件对象的field属性，也就是当前滑杆的值
-			trace(" fire  show label method ... ");
-            return int(data.num/(hs1.value+hs2.value+hs3.value)*100) + "%";
+				//注：data.num表示的就是PieSeries组件对象的field属性，也就是当前滑杆的值
+				trace(" fire  show label method ... ");
+				return int(data.num / (hs1.value + hs2.value + hs3.value) * 100) + "%";
 
-        }
+			}
+		]]>
 
+	</mx:Script>
 
-
-
-
-	]]>
-
-</mx:Script>
-
-	<mx:PieChart x="10" y="78" id="piechart1" dataProvider="{ac}" showDataTips="false">
+	<mx:PieChart x="10"
+				 y="78"
+				 id="piechart1"
+				 dataProvider="{ac}"
+				 showDataTips="false">
 
 		<mx:series>
 
@@ -125,7 +124,11 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 			<!--field属性：指定饼图各部分值与所绑定的数组对应的字段，本例中对应数组的num字段，也就是hs1.value、hs2.value和hs3.value-->
 
-			<mx:PieSeries displayName="Series 1" labelFunction="showLabel" labelPosition="outside" nameField="name" field="num"/>
+			<mx:PieSeries displayName="Series 1"
+						  labelFunction="showLabel"
+						  labelPosition="outside"
+						  nameField="name"
+						  field="num"/>
 
 		</mx:series>
 
@@ -133,7 +136,7 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 	<mx:Legend dataProvider="{piechart1}"/>
 
-	
+
 
 	<!--HSlider组件的主要属性：-->
 
@@ -145,17 +148,53 @@ width="709" height="488" creationComplete="initApp()" backgroundGradientAlphas="
 
 	<!--minimum/maximum属性：数值型。这两个相信大家一看就明白了，设置最小值和最大值的属性。-->
 
-	<mx:HSlider x="418" y="198" id="hs1" value="10" liveDragging="true" snapInterval="1" tickInterval="25" minimum="0" maximum="100" change="test()"/>
+	<mx:HSlider x="418"
+				y="198"
+				id="hs1"
+				value="10"
+				liveDragging="true"
+				snapInterval="1"
+				tickInterval="25"
+				minimum="0"
+				maximum="100"
+				change="test()"/>
 
-	<mx:HSlider x="418" y="313" id="hs3" value="10" liveDragging="true" snapInterval="1" tickInterval="25" minimum="0" maximum="100" change="test()"/>
+	<mx:HSlider x="418"
+				y="313"
+				id="hs3"
+				value="10"
+				liveDragging="true"
+				snapInterval="1"
+				tickInterval="25"
+				minimum="0"
+				maximum="100"
+				change="test()"/>
 
-	<mx:HSlider x="418" y="257" id="hs2" value="10" liveDragging="true" snapInterval="1" tickInterval="25" minimum="0" maximum="100" change="test()"/>
+	<mx:HSlider x="418"
+				y="257"
+				id="hs2"
+				value="10"
+				liveDragging="true"
+				snapInterval="1"
+				tickInterval="25"
+				minimum="0"
+				maximum="100"
+				change="test()"/>
 
-	<mx:Label x="418" y="172" text="value1:" width="58"/>
+	<mx:Label x="418"
+			  y="172"
+			  text="value1:"
+			  width="58"/>
 
-	<mx:Label x="418" y="231" text="value2:" width="58"/>
+	<mx:Label x="418"
+			  y="231"
+			  text="value2:"
+			  width="58"/>
 
-	<mx:Label x="418" y="287" text="value3:" width="58"/>
+	<mx:Label x="418"
+			  y="287"
+			  text="value3:"
+			  width="58"/>
 
-</mx:Application> 
+</mx:Application>
 
