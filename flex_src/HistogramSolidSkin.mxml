@@ -3,7 +3,7 @@
 				width="800"
 				height="300"
 				layout="absolute"
-				creationComplete="init()"
+				creationComplete="initApp()" 
 				xmlns:chart="com.dobodo.view.*">
 	<mx:Style>
 		/* CSS file */
@@ -64,14 +64,18 @@ ProgressBar {
 
 	</mx:Style>
 	<mx:Script>
-		<!--[CDATA[
+		<![CDATA[
 			import mx.collections.ArrayCollection;
-			function init():void
+			public function initApp():void
 			{
-				boundChart(
-				{data:[25,36,77,65,25,35],date:[2003,2004,2005,2006,2007,2008],date_format:"m.d",title:"自定义图例样式",xtitle:"ProgrammaticSkin Demo"},
-				"统计图例"
-				);
+//				boundChart(
+//				{data: [25], date: [2003], date_format: "m.d", title: "自定义图例样式", xtitle: "ProgrammaticSkin Demo"}
+//				, "统计图例");
+				
+								boundChart(
+				{data: [25, 36, 77, 65, 25, 35], date: [2003, 2004, 2005, 2006, 2007, 2008], date_format: "m.d", title: "自定义图例样式", xtitle: "ProgrammaticSkin Demo"}
+				, "统计图例");
+				
 			}
 			/*
 			 * cData:   		图片数据
@@ -82,7 +86,7 @@ ProgressBar {
 			{
 				var o:* = cData;
 				var dataCollection:ArrayCollection = getArrayCollection(o.date,o.data);
-				chart1.init(dataCollection,cleng,o.title,o.xtitle,showAllTrip);
+				//chart1.init(dataCollection,cleng,o.title,o.xtitle,showAllTrip);
 				chart2.init(dataCollection,cleng,o.title,o.xtitle,showAllTrip);
 			}
 			public  function getArrayCollection(arrLabels:Array,arrValues:Array):ArrayCollection
@@ -99,16 +103,16 @@ ProgressBar {
 				}
 				return result;
 			}
-		]]-->
+		]]>
 	</mx:Script>
 	<mx:HBox>
-		<mx:Panel title="圆柱图"
+<!--		<mx:Panel title="圆柱图"
 				  width="395"
 				  height="300">
 			<chart:ClumnChart id="chart1">
 
 			</chart:ClumnChart>
-		</mx:Panel>
+		</mx:Panel>-->
 		<mx:Panel title="立方图"
 				  width="395"
 				  height="300">
