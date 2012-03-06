@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="516" height="386">
+    <mx:Script>
+        <![CDATA[
+            import mx.charts.HitData;
+            private var _selectedRegion:Object;
+        
+            public function set selectedRegion(item:Object):void
+            {
+               _selectedRegion = item;
+
+                var index:int = -1;
+                for (var i:int=0; i < zhuces.length && index == -1; i++)
+                {
+                    if (zhuces[i].Name == item.Name)
+                        index = i;
+                }
+                var explodeData:Array = [];
+                explodeData[index] = 0.15;
+                pcRegion.series[0].perWedgeExplodeRadius = explodeData;
+            }
+            
+            private function regionChange(item:Object):void
+            {
+                selectedRegion = item;
+            }
+            
+            private function getSliceLabel(item:Object, arg2:String, arg3:Number, arg4:Number):String
+            {
+                return item == null?"":item.Name + item.Value + "人";
+            }
+            ]]>
+    </mx:Script>
+    <mx:ArrayCollection id="zhuces">
+        <mx:Object>
+            <mx:Name>数据1</mx:Name>
+            <mx:Value>3</mx:Value>
+        </mx:Object>
+        <mx:Object>
+            <mx:Name>数据2</mx:Name>
+            <mx:Value>9</mx:Value>
+        </mx:Object>
+        <mx:Object>
+            <mx:Name>数据3</mx:Name>
+            <mx:Value>2</mx:Value>
+        </mx:Object>
+        <mx:Object>
+            <mx:Name>数据4</mx:Name>
+            <mx:Value>2</mx:Value>
+        </mx:Object>
+        <mx:Object>
+            <mx:Name>数据5</mx:Name>
+            <mx:Value>2</mx:Value>
+        </mx:Object>
+        <mx:Object>
+            <mx:Name>数据6</mx:Name>
+            <mx:Value>2</mx:Value>
+        </mx:Object>
+    </mx:ArrayCollection>
+    
+     <mx:SeriesInterpolate id="interpolate" elementOffset="10"/>
+     
+    <mx:PieChart id="pcRegion" 
+        dataProvider="{zhuces}"  
+        itemClick="regionChange(event.hitData.item)"
+        showDataTips="true" width="496" height="366"
+        x="10" y="10" alpha="0.63" themeColor="#ff8000"
+         showEffect="Fide" hideEffect="Fide" moveEffect="Glow" 
+         focusInEffect="Glow"
+         fontFamily="simsun" fontSize="12"
+         >
+        
+        <mx:series>
+            <mx:Array>
+                <mx:PieSeries field="Value" nameField="Name" labelPosition="callout"
+                  labelFunction="getSliceLabel" showDataEffect="{interpolate}">
+                  <mx:fills>
+                    <mx:Array>
+                        <mx:RadialGradient>
+                            <mx:entries>
+                                <mx:Array>
+                                    <mx:GradientEntry color="#EF7651" ratio="0"/>
+                                    <mx:GradientEntry color="#994C34" ratio="1"/>
+                                </mx:Array>
+                            </mx:entries>
+                        </mx:RadialGradient>
+                        <mx:RadialGradient>
+                            <mx:entries>
+                                <mx:Array>
+                                    <mx:GradientEntry color="#E9C836" ratio="0"/>
+                                    <mx:GradientEntry color="#AA9127" ratio="1"/>
+                                </mx:Array>
+                            </mx:entries>
+                        </mx:RadialGradient>
+                        <mx:RadialGradient>
+                            <mx:entries>
+                                <mx:Array>
+                                    <mx:GradientEntry color="#6FB35F" ratio="0"/>
+                                    <mx:GradientEntry color="#497B54" ratio="1"/>
+                                </mx:Array>
+                            </mx:entries>
+                        </mx:RadialGradient>
+                        <mx:RadialGradient>
+                            <mx:entries>
+                                <mx:Array>
+                                    <mx:GradientEntry color="#A1AECF" ratio="0"/>
+                                    <mx:GradientEntry color="#47447A" ratio="1"/>
+                                </mx:Array>
+                            </mx:entries>
+                        </mx:RadialGradient>
+                        <mx:RadialGradient>
+                            <mx:entries>
+                                <mx:Array>
+                                    <mx:GradientEntry color="#BA9886" ratio="0"/>
+                                    <mx:GradientEntry color="#AE775B" ratio="1"/>
+                                </mx:Array>
+                            </mx:entries>
+                        </mx:RadialGradient>
+                    </mx:Array>
+                  </mx:fills>
+                </mx:PieSeries>
+            </mx:Array>
+        </mx:series>    
+    </mx:PieChart>
+    <mx:Label text="PieChart Demo" fontWeight="bold" right="10" bottom="10"/>
+    <mx:Legend x="10" y="10" dataProvider="{pcRegion}"/>
+</mx:Application>
+

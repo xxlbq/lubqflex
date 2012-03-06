@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://www.adobe.com/2006/mxml"
+			 layout="vertical"
+
+			 xmlns:local="com.dobodo.drawhelper.*"
+			 initialize="aa()"
+			 viewSourceURL="source/index.html">
+
+
+	<Script>
+		<![CDATA[
+			import mx.charts.chartClasses.Series;
+			import mx.charts.chartClasses.ChartBase;
+			import mx.charts.events.ChartItemEvent;
+			import mx.charts.ChartItem;
+			
+			private var min:Number = 0;
+			private var max:Number = 100;
+			private var chart:ChartBase;
+			private var series:Series;
+			
+			[Bindable] public var xml:XML=
+								 <comturys>
+								   <comtury id="0" name="中国">
+								<undo>25</undo>
+								  <finished>20</finished>
+								   </comtury>
+								   <comtury id="1" name="美国">
+								<undo>15</undo>
+								  <finished>10</finished>
+								   </comtury>
+								   <comtury id="2" name="日本">
+								<undo>10</undo>
+								  <finished>7</finished>
+								   </comtury>
+								   <comtury id="3" name="伊拉克">
+								<undo>16</undo>
+								  <finished>15</finished>
+								   </comtury>
+								   <comtury id="4" name="韩国">
+								<undo>20</undo>
+								  <finished>20</finished>
+								   </comtury>
+								 </comturys>;
+			
+			public function catLabel(value:XML,field:String,index:Number,percent:Number):String
+			{
+				return value.@name;
+				
+			}
+			public function aa():void{
+					chart = pieChart;
+					series = pieSeries;
+//				chart.setStyle("showDataEffect",effD);
+				chart.dataProvider=xml.children();
+			}			
+		]]>
+	</Script>
+
+	<!--	<effects:DrillDownEffect id="effD" duration="1500"  effectEnd="chart.mouseChildren = true;" />
+		<effects:DrillUpEffect id="effU" duration="1500" effectEnd="chart.mouseChildren = true;" />-->
+
+	<PieChart id="pieChart"
+			  width="100%"
+			  height="100%"
+			  showDataTips="true">
+		<series>
+			<PieSeries field="undo"
+					   id="pieSeries"
+					   labelFunction="catLabel"
+					   labelPosition="outside">
+				<fills>
+					<Array>
+						<Number>#F8FF01</Number>
+						<Number>#FCD202</Number>
+						<Number>#FF9E01</Number>
+
+						<Number>#FF6600</Number>
+						<Number>#0D8ECF</Number>
+						<Number>#04D215</Number>
+						<Number>#B0DE09</Number>
+
+					</Array>
+				</fills>
+				<!--
+											<radialStroke>
+												<Stroke color="#000000" weight=".5" />
+											</radialStroke>
+											<stroke>
+												<Stroke color="#000000" weight=".5" />
+											</stroke>
+				-->
+				<itemRenderer>
+					<Component>
+						<local:tesetes overColor="#8888E0"
+									   downColor="#4444AA"/>
+					</Component>
+				</itemRenderer>
+			</PieSeries>
+		</series>
+	</PieChart>
+
+</Application>

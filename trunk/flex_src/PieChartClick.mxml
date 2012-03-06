@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- http://blog.flexexamples.com/2007/11/22/animating-a-flex-piechart-controls-rotation-when-a-user-clicks-on-an-item/ -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+        layout="vertical"
+        verticalAlign="middle"
+        backgroundColor="white">
+
+    <mx:Script>
+        <![CDATA[
+            import mx.effects.easing.*;
+            import mx.charts.series.items.PieSeriesItem;
+            import mx.charts.events.ChartItemEvent;
+
+            private function pieChart_itemClick(evt:ChartItemEvent):void {
+                var item:PieSeriesItem = evt.hitData.chartItem as PieSeriesItem;
+//                var degrees:Number = radiansToDegrees(item.startAngle);
+                var arr:Array = [];
+                if (checkBox.selected) {
+                    arr[item.index] = 0.2;
+                }
+                pieSeries.perWedgeExplodeRadius = arr;
+//                pieSeries.startAngle -= degrees;
+
+                dp.refresh();
+            }
+
+            private function radiansToDegrees(radians:Number):Number {
+                return radians * (180 / Math.PI);
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:XMLListCollection id="dp">
+        <mx:source>
+            <mx:XMLList>
+                <product label="Product 1" data="3" />
+                <product label="Product 2" data="1" />
+                <product label="Product 3" data="4" />
+                <product label="Product 4" data="1" />
+                <product label="Product 5" data="5" />
+                <product label="Product 6" data="9" />
+            </mx:XMLList>
+        </mx:source>
+    </mx:XMLListCollection>
+
+    <mx:ApplicationControlBar dock="true">
+        <mx:CheckBox id="checkBox"
+                label="Use perWedgeExplodeRadius:"
+                labelPlacement="left"
+                selected="true" />
+    </mx:ApplicationControlBar>
+
+    <mx:PieChart id="pieChart"
+            dataProvider="{dp}"
+            showDataTips="true"
+            itemClick="pieChart_itemClick(event);"
+            height="100%"
+            width="100%">
+        <mx:series>
+            <mx:PieSeries id="pieSeries"
+                    field="@data"
+                    nameField="@label">
+<!--                <mx:showDataEffect>
+                    <mx:SeriesInterpolate duration="1500"
+                            easingFunction="{Elastic.easeOut}" />
+                </mx:showDataEffect>-->
+                <mx:filters>
+                    <mx:DropShadowFilter />
+                </mx:filters>
+            </mx:PieSeries>
+        </mx:series>
+    </mx:PieChart>
+
+    <mx:Legend dataProvider="{pieChart}" direction="horizontal" />
+
+</mx:Application>
