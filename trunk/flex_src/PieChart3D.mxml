@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://www.adobe.com/2006/mxml"
-			 layout="vertical"
 
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+			 layout="vertical"
 			 xmlns:local="com.dobodo.drawhelper.*"
 			 initialize="aa()"
 			 viewSourceURL="source/index.html">
 
 
-	<Script>
+	<mx:Script>
 		<![CDATA[
 			import mx.charts.chartClasses.Series;
 			import mx.charts.chartClasses.ChartBase;
@@ -16,8 +16,8 @@
 			
 			private var min:Number = 0;
 			private var max:Number = 100;
-			private var chart:ChartBase;
-			private var series:Series;
+//			private var chart:ChartBase;
+//			private var series:Series;
 			
 			[Bindable] public var xml:XML=
 								 <comturys>
@@ -45,59 +45,92 @@
 			
 			public function catLabel(value:XML,field:String,index:Number,percent:Number):String
 			{
+				trace("catLabel element:"+value);
 				return value.@name;
 				
 			}
 			public function aa():void{
-					chart = pieChart;
-					series = pieSeries;
+//					chart = pieChart;
+//					series = pieSeries;
 //				chart.setStyle("showDataEffect",effD);
-				chart.dataProvider=xml.children();
+//				chart.dataProvider=xml.children();
+//				trace("xml element:"+xml.children());
+//				chart.dataProvider = dataP.source;
+
+//				trace("xml element:"+cmtys.comtrys.comtury);
 			}			
 		]]>
-	</Script>
+	</mx:Script>
+
+
 
 	<!--	<effects:DrillDownEffect id="effD" duration="1500"  effectEnd="chart.mouseChildren = true;" />
 		<effects:DrillUpEffect id="effU" duration="1500" effectEnd="chart.mouseChildren = true;" />-->
 
-	<PieChart id="pieChart"
+<!--	<mx:PieChart id="pieChart"
 			  width="100%"
 			  height="100%"
-			  showDataTips="true">
-		<series>
-			<PieSeries field="undo"
+			  showDataTips="true"
+				dataProvider="{cmtys.comtrys.comtury}"-->
+				
+	
+	<mx:PieChart id="pieChart"
+			  width="100%"
+			  height="100%"
+			  showDataTips="true"
+				dataProvider="{dataP}"
+				
+			   > 
+		<mx:series>
+			<mx:PieSeries field="@undo"
 					   id="pieSeries"
 					   labelFunction="catLabel"
 					   labelPosition="outside">
-				<fills>
-					<Array>
-						<Number>#F8FF01</Number>
-						<Number>#FCD202</Number>
-						<Number>#FF9E01</Number>
+				<mx:fills>
+					<mx:Array>
+						<mx:Number>#F8FF01</mx:Number>
+						<mx:Number>#FCD202</mx:Number>
+						<mx:Number>#FF9E01</mx:Number>
 
-						<Number>#FF6600</Number>
-						<Number>#0D8ECF</Number>
-						<Number>#04D215</Number>
-						<Number>#B0DE09</Number>
+						<mx:Number>#FF6600</mx:Number>
+						<mx:Number>#0D8ECF</mx:Number>
+						<mx:Number>#04D215</mx:Number>
+						<mx:Number>#B0DE09</mx:Number>
 
-					</Array>
-				</fills>
-				<!--
-											<radialStroke>
-												<Stroke color="#000000" weight=".5" />
-											</radialStroke>
-											<stroke>
-												<Stroke color="#000000" weight=".5" />
-											</stroke>
-				-->
-				<itemRenderer>
-					<Component>
+					</mx:Array>
+				</mx:fills>
+
+<!--											<mx:radialStroke>
+												<mx:Stroke color="#000000" weight=".5" />
+											</mx:radialStroke>-->
+											<mx:stroke>
+												<mx:Stroke color="#000000" weight=".5" />
+											</mx:stroke>
+
+				<mx:itemRenderer>
+					<mx:Component>
 						<local:tesetes overColor="#8888E0"
 									   downColor="#4444AA"/>
-					</Component>
-				</itemRenderer>
-			</PieSeries>
-		</series>
-	</PieChart>
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:PieSeries>
+		</mx:series>
 
-</Application>
+	</mx:PieChart>
+
+
+    <mx:XMLListCollection id="dataP" source="{cmtys.comtrys.comtury}"/>
+    
+    
+    <mx:XML id="cmtys">
+    	<root>
+    	        <comtrys>
+	            		<comtury id="0" name="中国" undo="25" finished="20" />
+		                <comtury id="1" name="美国" undo="15" finished="10" />
+		                <comtury id="2" name="日本" undo="10" finished="7" />
+		                <comtury id="3" name="韩国" undo="16" finished="15" />
+	            </comtrys>
+	    </root>
+    </mx:XML>
+    
+</mx:Application>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				xmlns:local="com.dobodo.drawhelper.*" 
+				verticalAlign="middle"
+				horizontalAlign="center"
+				width="100%"
+				height="100%"
+				creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			public var xml:XML=<comturys>
+					<comtury id="0" name="中国">
+						<undo>25</undo>
+						<finished>20</finished>
+					</comtury>
+					<comtury id="1" name="美国">
+						<undo>15</undo>
+						<finished>10</finished>
+					</comtury>
+					<comtury id="2" name="日本">
+						<undo>10</undo>
+						<finished>7</finished>
+					</comtury>
+					<comtury id="3" name="伊拉克">
+						<undo>16</undo>
+						<finished>15</finished>
+					</comtury>
+					<comtury id="4" name="韩国">
+						<undo>20</undo>
+						<finished>20</finished>
+					</comtury>
+				</comturys>;
+			[Bindable]
+			public var arr:Array=new Array(0xB2B6F5, 0xE59490, 0xE0CA78);
+
+			public function init():void
+			{
+				cs.dataProvider=xml.children();
+			}
+
+			public function display(data:Object, field:String, index:Number, percentValue:Number):String
+			{
+				var temp:String=(" " + percentValue).substr(0, 6);
+				return data.@name + ": " + temp + "%";
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox width="100%"
+			 height="100%">
+
+		<mx:VBox width="20%"
+				 height="10%">
+
+		</mx:VBox>
+		<mx:Panel id="panel"
+				  verticalCenter="true"
+				  horizontalAlign="true"
+				  title="自定义3d柱状图"
+				  width="80%"
+				  height="90%"
+				  alpha="1"
+				  paddingBottom="0"
+				  paddingLeft="0"
+				  paddingTop="0"
+				  paddingRight="0">
+
+			<mx:ColumnChart id="cs"
+							width="70%"
+							height="80%" showDataTips="true" showAllDataTips="false">
+				<mx:horizontalAxis>
+					<mx:CategoryAxis id="haxis"
+									 categoryField="@name"/>
+				</mx:horizontalAxis>
+				<mx:series>
+					<mx:ColumnSeries maxWidth="20"
+									 yField="undo"
+									 maxColumnWidth="25"
+									 displayName="@name">
+						<mx:itemRenderer>
+							<mx:Component>
+								<local:RollOverBoxItemRenderer color="#8888E0"
+															   downColor="#8888E0"
+															   overColor="#8888E0"/>
+							</mx:Component>
+						</mx:itemRenderer>
+					</mx:ColumnSeries>
+				</mx:series>
+			</mx:ColumnChart>
+		</mx:Panel>
+	</mx:VBox>
+</mx:Application>
