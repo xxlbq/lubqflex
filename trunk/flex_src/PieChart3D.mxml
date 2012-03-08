@@ -19,29 +19,29 @@
 //			private var chart:ChartBase;
 //			private var series:Series;
 			
-			[Bindable] public var xml:XML=
-								 <comturys>
-								   <comtury id="0" name="中国">
-								<undo>25</undo>
-								  <finished>20</finished>
-								   </comtury>
-								   <comtury id="1" name="美国">
-								<undo>15</undo>
-								  <finished>10</finished>
-								   </comtury>
-								   <comtury id="2" name="日本">
-								<undo>10</undo>
-								  <finished>7</finished>
-								   </comtury>
-								   <comtury id="3" name="伊拉克">
-								<undo>16</undo>
-								  <finished>15</finished>
-								   </comtury>
-								   <comtury id="4" name="韩国">
-								<undo>20</undo>
-								  <finished>20</finished>
-								   </comtury>
-								 </comturys>;
+//			[Bindable] public var xml:XML=
+//								 <comturys>
+//								   <comtury id="0" name="中国">
+//								<undo>25</undo>
+//								  <finished>20</finished>
+//								   </comtury>
+//								   <comtury id="1" name="美国">
+//								<undo>15</undo>
+//								  <finished>10</finished>
+//								   </comtury>
+//								   <comtury id="2" name="日本">
+//								<undo>10</undo>
+//								  <finished>7</finished>
+//								   </comtury>
+//								   <comtury id="3" name="伊拉克">
+//								<undo>16</undo>
+//								  <finished>15</finished>
+//								   </comtury>
+//								   <comtury id="4" name="韩国">
+//								<undo>20</undo>
+//								  <finished>20</finished>
+//								   </comtury>
+//								 </comturys>;
 			
 			public function catLabel(value:XML,field:String,index:Number,percent:Number):String
 			{
@@ -103,9 +103,9 @@
 <!--											<mx:radialStroke>
 												<mx:Stroke color="#000000" weight=".5" />
 											</mx:radialStroke>-->
-											<mx:stroke>
-												<mx:Stroke color="#000000" weight=".5" />
-											</mx:stroke>
+				<mx:stroke>
+					<mx:Stroke color="#000000" weight=".5" />
+				</mx:stroke>
 
 				<mx:itemRenderer>
 					<mx:Component>
@@ -129,6 +129,8 @@
 		                <comtury id="1" name="美国" undo="15" finished="10" />
 		                <comtury id="2" name="日本" undo="10" finished="7" />
 		                <comtury id="3" name="韩国" undo="16" finished="15" />
+		                <comtury id="3" name="越南" undo="60" finished="15" />
+		                <comtury id="3" name="俄罗斯" undo="35" finished="15" />
 	            </comtrys>
 	    </root>
     </mx:XML>

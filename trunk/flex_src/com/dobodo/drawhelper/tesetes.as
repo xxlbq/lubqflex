@@ -1,14 +1,14 @@
 package com.dobodo.drawhelper
 {
 
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
+	import com.dobodo.qs.utils.ColorUtils;
+	
 	import flash.display.Graphics;
 	import flash.events.MouseEvent;
 	import flash.filters.*;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-
+	
 	import mx.charts.chartClasses.GraphicsUtilities;
 	import mx.charts.series.items.PieSeriesItem;
 	import mx.core.IDataRenderer;
@@ -105,19 +105,26 @@ package com.dobodo.drawhelper
 
 			var stroke:IStroke=getStyle("stroke");
 			var radialStroke:IStroke=getStyle("radialStroke");
+			
 			var outerRadius:Number=_wedge.outerRadius;
 			var innerRadius:Number=_wedge.innerRadius;
+			
 			var origin:Point=_wedge.origin;
 			var angle:Number=_wedge.angle;
+			
 			var startAngle:Number=_wedge.startAngle;
 			var endAngle:Number=startAngle + angle;
+			
 			var _a:Number=outerRadius; //长轴 
 			var _b:Number=4 * outerRadius / 8; //短轴
 			var h:Number=outerRadius / 2; //厚度	
-			if (h > 20)
-			{
-				h=20;
-			}
+//			if (h > 20)
+//			{
+//				h=20;
+//			}
+
+			
+
 			var step:Number=0;
 			var pi:Number=Math.PI;
 			if (!_wedge)
@@ -135,42 +142,42 @@ package com.dobodo.drawhelper
 					fillColor=SolidColor(f).color;
 				}
 			}
-////		recolor=fillColor;
-//		var hsv:Object;
-//	  hsv = ColorUtils.RGBToHSV(fillColor);
-//					hsv.v = Math.min(1,hsv.v*1.3);
-//					hsv.s = hsv.s *.8;
-//					fillColor = ColorUtils.HSVToRGB(hsv);
-//		switch(mouseState)
-//		{
-//			case "over":
-//			if (isNaN(overColor))
-//			{
-//					hsv = ColorUtils.RGBToHSV(fillColor);
-//					hsv.v = Math.min(1,hsv.v*1.3);
-//					hsv.s = hsv.s *.8;
-//			}
-//			else
-//			{
-//				fillColor = overColor;
-//			}
-//				break;
-//			case "down":
-//			if(isNaN(downColor))				
-//			{
-//					hsv = ColorUtils.RGBToHSV(fillColor);
-//					hsv.v = Math.min(1,hsv.v*1.3);
-//					hsv.s = hsv.s *.8;
-//					fillColor = ColorUtils.HSVToRGB(hsv);
-//			}
-//		else
-//			{
-//				fillColor = downColor;
-//				}
-//				break;
-//			default:
-//				break;
-//		}
+//		recolor=fillColor;
+		var hsv:Object;
+	  	hsv = ColorUtils.RGBToHSV(fillColor);
+					hsv.v = Math.min(1,hsv.v*1.3);
+					hsv.s = hsv.s *.8;
+					fillColor = ColorUtils.HSVToRGB(hsv);
+		switch(mouseState)
+		{
+			case "over":
+			if (isNaN(overColor))
+			{
+					hsv = ColorUtils.RGBToHSV(fillColor);
+					hsv.v = Math.min(1,hsv.v*1.3);
+					hsv.s = hsv.s *.8;
+			}
+			else
+			{
+				fillColor = overColor;
+			}
+				break;
+			case "down":
+			if(isNaN(downColor))				
+			{
+					hsv = ColorUtils.RGBToHSV(fillColor);
+					hsv.v = Math.min(1,hsv.v*1.3);
+					hsv.s = hsv.s *.8;
+					fillColor = ColorUtils.HSVToRGB(hsv);
+			}
+		else
+			{
+				fillColor = downColor;
+				}
+				break;
+			default:
+				break;
+		}
 
 			var drakColor:uint=getDarkColor(fillColor); //深色
 			var g:Graphics=graphics;
