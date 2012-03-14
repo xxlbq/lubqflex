@@ -75,7 +75,7 @@
 				
 	
 	<mx:PieChart id="pieChart"
-			  width="500"
+			  width="400"
 			  height="600"
 			  showDataTips="true"
 				dataProvider="{dataP}"
@@ -109,7 +109,7 @@
 
 				<mx:itemRenderer>
 					<mx:Component>
-						<local:tesetes overColor="#8888E0"
+						<local:PieChartSkin3D overColor="#8888E0"
 									   downColor="#4444AA"/>
 					</mx:Component>
 				</mx:itemRenderer>
@@ -122,24 +122,23 @@
     <mx:XMLListCollection id="dataP" source="{cmtys.comtrys.comtury}"/>
     
     
-<!--    <mx:XML id="cmtys">
-    	<root>
-    	        <comtrys>
-	            		<comtury id="0" name="中国" undo="25" finished="20" />
-		                <comtury id="1" name="美国" undo="10" finished="10" />
-    					<comtury id="2" name="日本" undo="10" finished="7" />
-		                <comtury id="3" name="韩国" undo="16" finished="15" />
-		                <comtury id="3" name="越南" undo="60" finished="15" />
-		                <comtury id="3" name="俄罗斯" undo="35" finished="15" />
-	            </comtrys>
-	    </root>
-    </mx:XML>-->
-    
-    
     <mx:XML id="cmtys">
     	<root>
     	        <comtrys>
+		                <comtury id="1" name="美国" undo="80" finished="32" />
+    	            	<comtury id="0" name="中国" undo="20" finished="6" />
+<!--		                <comtury id="3" name="韩国" undo="40" finished="15" />
+		                <comtury id="4" name="泰国" undo="16" finished="15" />
+		                <comtury id="5" name="越南" undo="60" finished="15" />-->
+
+	            </comtrys>
+	    </root>
+    </mx:XML>
     
+    
+       <!-- <mx:XML id="cmtys">
+    	<root>
+    	        <comtrys>
     	            	<comtury id="0" name="中国" undo="20" finished="6" />
 		                <comtury id="1" name="美国" undo="80" finished="32" />
 		                <comtury id="3" name="韩国" undo="40" finished="15" />
@@ -150,7 +149,7 @@
 
 	            </comtrys>
 	    </root>
-    </mx:XML>
+    </mx:XML>-->
     
-
+    
 </mx:Application>

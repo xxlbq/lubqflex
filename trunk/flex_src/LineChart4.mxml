@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	  <mx:Script>
+  <![CDATA[  
+     import mx.collections.ArrayCollection;  
+     [Bindable]  
+     public var expenses:ArrayCollection = new ArrayCollection([  
+        {Month:"Jan", Profit:2000, Expenses:1500, Amount:450},  
+        {Month:"Feb", Profit:1000, Expenses:200, Amount:600},  
+        {Month:"Mar", Profit:1500, Expenses:500, Amount:300}  
+     ]);  
+  ]]>
+  
+  </mx:Script> 
+	
+	<mx:Stroke id="ticks"
+			   color="0xFF0000"
+			   weight="1"/>
+	<mx:Stroke id="mticks"
+			   color="0x0000FF"
+			   weight="1"/>
+	<mx:Panel title="LineChart and AreaChart Controls Example"
+			  height="300"
+			  width="700"
+			  layout="horizontal">
+		<mx:LineChart id="mychart"
+					  dataProvider="{expenses}"
+					  height="100%"
+					  width="100%"
+					  paddingLeft="5"
+					  paddingRight="5"
+					  >
+
+			<mx:horizontalAxis>
+				<mx:CategoryAxis dataProvider="{expenses}"
+								 categoryField="Month"/>
+			</mx:horizontalAxis>
+
+			<mx:series>
+				<mx:LineSeries yField="Profit"
+							   displayName="Profit"
+							   stroke="{ticks}" form="segment"/>
+				<mx:LineSeries yField="Expenses"
+							   displayName="Expenses"
+							   stroke="{mticks}" form="segment"/>
+
+			</mx:series>
+
+		</mx:LineChart>
+  
+  </mx:Panel>
+</mx:Application>
