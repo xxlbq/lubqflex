@@ -29,6 +29,9 @@ package com.dobodo.drawhelper
 		private var mouseState:String="";
 		private var alp:Number=0.95;
 		private var mostate:Boolean=false;
+		
+		
+		private var testalp:Number=0.5;
 
 		public function tesetes()
 		{
@@ -142,42 +145,42 @@ package com.dobodo.drawhelper
 					fillColor=SolidColor(f).color;
 				}
 			}
-//		recolor=fillColor;
-		var hsv:Object;
-	  	hsv = ColorUtils.RGBToHSV(fillColor);
-					hsv.v = Math.min(1,hsv.v*1.3);
-					hsv.s = hsv.s *.8;
-					fillColor = ColorUtils.HSVToRGB(hsv);
-		switch(mouseState)
-		{
-			case "over":
-			if (isNaN(overColor))
-			{
-					hsv = ColorUtils.RGBToHSV(fillColor);
-					hsv.v = Math.min(1,hsv.v*1.3);
-					hsv.s = hsv.s *.8;
-			}
-			else
-			{
-				fillColor = overColor;
-			}
-				break;
-			case "down":
-			if(isNaN(downColor))				
-			{
-					hsv = ColorUtils.RGBToHSV(fillColor);
-					hsv.v = Math.min(1,hsv.v*1.3);
-					hsv.s = hsv.s *.8;
-					fillColor = ColorUtils.HSVToRGB(hsv);
-			}
-		else
-			{
-				fillColor = downColor;
-				}
-				break;
-			default:
-				break;
-		}
+////		recolor=fillColor;
+//		var hsv:Object;
+//	  	hsv = ColorUtils.RGBToHSV(fillColor);
+//					hsv.v = Math.min(1,hsv.v*1.3);
+//					hsv.s = hsv.s *.8;
+//					fillColor = ColorUtils.HSVToRGB(hsv);
+//		switch(mouseState)
+//		{
+//			case "over":
+//			if (isNaN(overColor))
+//			{
+//					hsv = ColorUtils.RGBToHSV(fillColor);
+//					hsv.v = Math.min(1,hsv.v*1.3);
+//					hsv.s = hsv.s *.8;
+//			}
+//			else
+//			{
+//				fillColor = overColor;
+//			}
+//				break;
+//			case "down":
+//			if(isNaN(downColor))				
+//			{
+//					hsv = ColorUtils.RGBToHSV(fillColor);
+//					hsv.v = Math.min(1,hsv.v*1.3);
+//					hsv.s = hsv.s *.8;
+//					fillColor = ColorUtils.HSVToRGB(hsv);
+//			}
+//		else
+//			{
+//				fillColor = downColor;
+//				}
+//				break;
+//			default:
+//				break;
+//		}
 
 			var drakColor:uint=getDarkColor(fillColor); //深色
 			var g:Graphics=graphics;
@@ -205,15 +208,17 @@ package com.dobodo.drawhelper
 
 			if (!isNaN(fillColor))
 			{
-
-				g.beginFill(fillColor, 0);
+				trace(" fill color is not color style . ");
+				g.beginFill(fillColor, testalp);
 			}
 			else
 				f.begin(g, rc);
-//画底部
-			g.beginFill(fillColor, 0);
+				
+				
+//			//画底部
+			g.beginFill(fillColor, testalp);
 			g.moveTo(endBPt.x, endBPt.y);
-			GraphicsUtilities.setLineStyle(g, radialStroke);
+//			GraphicsUtilities.setLineStyle(g, radialStroke);
 
 			if (innerRadius == 0)
 			{
@@ -223,24 +228,28 @@ package com.dobodo.drawhelper
 			//GraphicsUtilities.setLineStyle(g, stroke);
 			GraphicsUtilities.drawArc(g, origin.x, origin.y + h, startAngle, angle, _a, _b, true);
 			g.endFill();
-			//画内弧
-			if ((startAngle <= pi / 2 && startAngle >= 0) || (startAngle >= 3 * pi / 2 && startAngle <= 2 * pi))
-			{
-				//g.lineStyle(0,drakColor,1)
-				g.beginFill(drakColor, 0);
+			
+			
+			
+			//画内弧               lubq@内部后分割面
+//			if ((startAngle <= pi / 2 && startAngle >= 0) || (startAngle >= 3 * pi / 2 && startAngle <= 2 * pi))
+//			{
+				g.lineStyle(0,drakColor,1)
+				g.beginFill(drakColor, testalp);
 				g.moveTo(startBPt.x, startBPt.y);
 				g.lineTo(startTPt.x, startTPt.y);
 				g.lineTo(origin.x, origin.y);
 				g.lineTo(origin.x, origin.y + h);
 				g.lineTo(startBPt.x, startBPt.y);
 				g.endFill();
-			}
-			//画外弧
-			if ((pi / 2 <= startAngle && startAngle <= 3 * pi / 2))
-			{
+//			}
+			//画外弧              lubq@内部前分割面
+//			if ((pi / 2 <= startAngle && startAngle <= 3 * pi / 2))
+//			{
 
-				//g.lineStyle(0,drakColor,1)
-				g.beginFill(drakColor, 1);
+				g.lineStyle(0,drakColor,1)
+				g.beginFill(0xD8ECF, 1);
+				
 				g.moveTo(endBPt.x, endBPt.y);
 				g.lineTo(endTPt.x, endTPt.y);
 				g.lineTo(origin.x, origin.y);
@@ -248,21 +257,42 @@ package com.dobodo.drawhelper
 				g.lineTo(endBPt.x, endBPt.y);
 				g.endFill();
 
-			}
+//			}
 
 			//画圆弧侧面
-			if (((startAngle <= 2 * pi && startAngle >= pi) || (endAngle > pi)))
-			{
+//			if (((startAngle <= 2 * pi && startAngle >= pi) || (endAngle > pi)))
+//			{
 				g.beginFill(drakColor, alp);
+				
 				g.moveTo(startTPt.x, startTPt.y);
 				GraphicsUtilities.drawArc(g, origin.x, origin.y, startAngle, angle, _a, _b, true);
+				
 				g.lineTo(endTPt.x, endTPt.y);
 				g.lineTo(endBPt.x, endBPt.y);
 				GraphicsUtilities.drawArc(g, origin.x, origin.y + h, startAngle, angle, _a, _b, true);
 				g.lineTo(startBPt.x, startBPt.y);
+				
+				g.moveTo(startBPt.x, startBPt.y);
+				g.lineTo(endBPt.x,endBPt.y);
+	
+//	
+//				if(endAngle > pi && startAngle <= pi){
+//					
+//					trace("endAngle:"+endAngle + ",startAngle:"+startAngle + ",angle:"+angle +",value:"+_wedge.value);
+//					g.moveTo(origin.x - _wedge.outerRadius, origin.y );
+//					g.lineTo(origin.x - _wedge.outerRadius, origin.y + h);
+//				}
+	
 				g.endFill();
-			}
 
+//			}
+
+
+			//lubq@-->
+
+			//lubq@<--
+			
+			
 			//画上面的
 			g.beginFill(fillColor, alp);
 			g.moveTo(endTPt.x, endTPt.y);
