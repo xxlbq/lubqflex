@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">  
+       <mx:Script>  
+        <![CDATA[
+        	import mx.graphics.GradientEntry;
+        	import mx.graphics.RadialGradient;
+        	import mx.utils.StringUtil;  
+      import mx.collections.ArrayCollection;            
+      import mx.charts.HitData;  
+      import mx.effects.easing.*;   
+        [Bindable]  
+        public var chengjiPie:ArrayCollection = new ArrayCollection( [  
+            { classs: "60分以下", num: 5 },  
+            { classs: "60~70分", num: 4 },  
+            { classs: "70~80分", num:5},  
+            { classs: "80~90分", num: 4},  
+            { classs: "90分以上", num: 3}]);  
+         private function pieSeries_labelFunc(item:Object, field:String, index:Number, percentValue:Number):String {   
+                return StringUtil.substitute("{0} ({1}%)",   
+                            item.classs,   
+                            percentValue.toFixed(1));   
+            }        
+	
+	
+//	public function getarray():Array
+//	{
+//		var array:Array=new Array();
+//		array[0]=this.getGradient(0xEF7651,0x994C34);
+//		array[1]=this.getGradient(0xE9C836,0xAA9127);
+//		array[2]=this.getGradient(0x6FB35F,0x497B54);
+//		array[3]=this.getGradient(0xA1AECF,0x47447A);
+//		array[4]=this.getGradient(0xBA9886,0xAE775B);
+//		return array;
+//	}
+//	public function getGradient(color:uint,color1:uint):RadialGradient
+//	{
+//		var array:Array=new Array();
+//		var ge:GradientEntry=new GradientEntry(color,0,0);
+//		var ge1:GradientEntry=new GradientEntry(color1,1,0);
+//		array[0]=ge;
+//		array[1]=ge1;
+//		var rg:RadialGradient=new RadialGradient();
+//		rg.entries=array;
+//		return rg;
+//	}
+        ]]>  
+       
+    </mx:Script>  
+    <mx:VBox x="0" y="0" width="400" height="400" >
+      <mx:PieChart x="0" y="0" id="chart"   width="100%" height="100%"  
+                dataProvider="{chengjiPie}"   left="0" top="0">  
+                <mx:series>  
+                <mx:Array>  
+                        <mx:PieSeries nameField="classs"  width="100%" height="100%"    reserveExplodeRadius="0.22"     alpha="1.0"         field="num" filters="[]">  
+                         <mx:fills >  
+                            <mx:Array>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#EF7651" ratio="0"  alpha="1"/>  
+                                            <mx:GradientEntry color="#994C34" ratio="1" alpha="1"/>  
+
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#E9C836" ratio="0" alpha="1"/>  
+                                            <mx:GradientEntry color="#AA9127" ratio="1" alpha="1"/>  
+   
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#6FB35F" ratio="0" alpha="1"/>  
+                                            <mx:GradientEntry color="#497B54" ratio="1" alpha="1"/>  
+        
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#A1AECF" ratio="0" alpha="1"/>  
+                                            <mx:GradientEntry color="#47447A" ratio="1" alpha="1"/>  
+               
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient >  
+                                    <mx:entries >  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#BA9886" ratio="0" alpha="1"/>  
+                                            <mx:GradientEntry color="#AE775B" ratio="1" alpha="1"/>  
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                            </mx:Array>  
+                        </mx:fills>  
+                   
+                        </mx:PieSeries>  
+                      
+                       <mx:PieSeries nameField="classs" alpha="1.0"  width="100%" height="100%"   reserveExplodeRadius="0.65" field="num" filters="[]"   >      
+             
+                         <mx:fills>  
+                            <mx:Array>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#EF7651" ratio="0" alpha="0"/>  
+                                            <mx:GradientEntry color="#994C34" ratio="1" alpha="1"/>  
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#E9C836" ratio="0" alpha="0"/>  
+                                            <mx:GradientEntry color="#AA9127" ratio="1" alpha="1"/>  
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#6FB35F" ratio="0" alpha="0"/>  
+                                            <mx:GradientEntry color="#497B54" ratio="1" alpha="1"/>  
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#A1AECF" ratio="0" alpha="0"/>  
+                                            <mx:GradientEntry color="#47447A"  ratio="1" alpha="1"/>  
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                                <mx:RadialGradient>  
+                                    <mx:entries>  
+                                        <mx:Array>  
+                                            <mx:GradientEntry color="#BA9886" ratio="0" alpha="0"/>  
+                                            <mx:GradientEntry color="#AE775B" ratio="1" alpha="1"/>  
+                                        </mx:Array>  
+                                    </mx:entries>  
+                                </mx:RadialGradient>  
+                            </mx:Array>  
+                        </mx:fills>  
+                   
+                        </mx:PieSeries>
+                    
+                        </mx:Array>    
+                </mx:series>  
+            </mx:PieChart>      
+             </mx:VBox>
+</mx:Application>  
+

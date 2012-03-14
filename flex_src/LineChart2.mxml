@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+<mx:Script>
+<![CDATA[
+
+	import mx.charts.series.LineSeries;
+	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
+	import mx.events.MoveEvent;
+	
+	private var expensesAC:ArrayCollection = new ArrayCollection( [//全部数据
+		{ Month: "Jan", Profit: 2000 },
+		{ Month: "Feb", Profit: 1000 },
+		{ Month: "Mar", Profit: 1500 },
+		{ Month: "Apr", Profit: -1800 },
+		{ Month: "May", Profit: 2400 },
+		{ Month: "六月", Profit: -2000 },
+		{ Month: "七月", Profit: 1000 },
+		{ Month: "八月", Profit: 1500 },
+		{ Month: "九月", Profit: -1800 },
+		{ Month: "十月", Profit: 2400 }
+		]);
+	[Bindable]
+	private var showData:ArrayCollection = new ArrayCollection();//定义要显示的临时数据
+	private var firstIndex:int, lastIndex:int;
+	private function init():void
+	{
+		for(var i:int=0; i<5; i++)
+			showData.addItem(expensesAC[i]);
+		firstIndex = 0;
+		lastIndex = 4;
+	}
+	
+    private var oldX:Number,oldY:Number;
+    
+    private  function onMouseMove(event:MouseEvent):void
+    {
+	   if(event.buttonDown)
+	   {
+	      	var addx:Number = 0;
+	      	addx = event.stageX - oldX;//变化的x坐标
+	   		if(addx >= 15)
+	   		{	
+	   			if(lastIndex < expensesAC.length-1)
+	   			{
+		   			showData.removeItemAt(0);//删除临时数据的头一个数据点
+		   			showData.addItem(expensesAC[lastIndex+1]);//增加一个新的数据点
+		   			firstIndex ++ ;
+					lastIndex ++ ;
+		   			addx = 0;
+		   			oldX = event.stageX;
+		   		}
+		   		else
+		   		{
+		   			Alert.show("已是最后一个数据点!");
+		   		}
+	   		}
+	   		if(addx <= -15)
+	   		{
+	   			if(firstIndex > 0)
+	   			{
+		   			showData.removeItemAt(4);//删除临时数据的头一个数据点
+		   			showData.addItemAt(expensesAC[firstIndex-1],0)//增加一个新的数据点
+		   			firstIndex = firstIndex -1 ;
+					lastIndex=lastIndex-1;
+		   			addx = 0;
+		   			oldX = event.stageX;
+		   		}
+		   		else
+		   		{
+		   			Alert.show("已是第一个数据点!");
+		   		}
+	   		}	                        		
+	   }
+    }
+    private  function onMouseDown(event:MouseEvent):void
+    {
+	    oldX = event.stageX;//按下鼠标时的x坐标	    
+    }
+	
+	private function moveLeft():void
+	{
+		if(firstIndex >0 )
+		{
+			showData.removeItemAt(4);//删除临时数据的头一个数据点
+			showData.addItemAt(expensesAC[firstIndex-1],0)//增加一个新的数据点
+			firstIndex =firstIndex -1 ;
+			lastIndex =lastIndex -1 ;	
+		}	
+		else 
+		{
+			Alert.show("已是第一个数据点!");
+		}
+	}
+	private function moveRight():void
+	{
+		if(lastIndex < expensesAC.length-1  )
+		{
+			showData.removeItemAt(0);//删除临时数据的头一个数据点
+			showData.addItem(expensesAC[lastIndex+1]);//增加一个新的数据点
+			firstIndex ++ ;
+			lastIndex ++ ;
+		}
+		else
+		{
+		    Alert.show("已是最后一个数据点!");
+		}
+	}
+	]]>
+</mx:Script>
+
+<mx:Panel title="LineChart and AreaChart Controls Example" height="100%" width="100%"  layout="vertical">
+	<mx:LineChart id="linechart" height="100%" width="100%" paddingLeft="5" paddingRight="5"  showDataTips="true" dataProvider="{expensesAC}" mouseMove="onMouseMove(event)" mouseDown="onMouseDown(event)">
+		<mx:horizontalAxis>
+			<mx:CategoryAxis categoryField="Month"/>
+		</mx:horizontalAxis>
+		<mx:series>
+			<mx:LineSeries  id="profitSeries" yField="Profit"  displayName="Profit" itemRenderer="mx.charts.renderers.LineRenderer" />
+		</mx:series>
+	</mx:LineChart>
+	<mx:Canvas width="100%">
+		<mx:Legend dataProvider="{linechart}" x="0" height="33" y="10"/>
+		<mx:Button label="左移" x="569" y="11" click="moveLeft()"/>
+		<mx:Button label="右移" x="660" y="11" click="moveRight()"/>
+	</mx:Canvas>
+</mx:Panel>
+</mx:Application>

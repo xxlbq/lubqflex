@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" 
+height="100%"> 
+  <mx:Script><![CDATA[ 
+     import mx.collections.ArrayCollection; 
+     [Bindable] 
+     public var expenses:ArrayCollection = new ArrayCollection([ 
+        {Month:"Jan", Profit:2000, Expenses:1500, Amount:450}, 
+        {Month:"Feb", Profit:1000, Expenses:200, Amount:600}, 
+        {Month:"Mar", Profit:1500, Expenses:500, Amount:300} 
+     ]); 
+  ]]></mx:Script> 
+	<mx:Panel title="Line Chart"
+			  width="100%"
+			  height="100%">
+		<mx:LineChart id="myChart"
+					  dataProvider="{expenses}"
+					  showDataTips="true"
+					  width="100%"
+					  height="100%">
+
+			<mx:backgroundElements>
+				<mx:Grid height="100%"
+						 width="100%"
+						 verticalGap="0">
+					<mx:GridRow height="20%"
+								width="100%">
+						<mx:GridItem height="100%"
+									 width="100%">
+							<mx:Canvas height="100%"
+									   width="100%"
+									   alpha="0.7"
+									   backgroundColor="#1dae00"/>
+						</mx:GridItem>
+					</mx:GridRow>
+					<mx:GridRow height="20%"
+								width="100%">
+						<mx:GridItem height="100%"
+									 width="100%">
+							<mx:Canvas height="100%"
+									   width="100%"
+									   alpha="0.7"
+									   backgroundColor="#ffa800"/>
+						</mx:GridItem>
+					</mx:GridRow>
+					<mx:GridRow height="20%"
+								width="100%">
+						<mx:GridItem height="100%"
+									 width="100%">
+							<mx:Canvas height="100%"
+									   width="100%"
+									   alpha="0.7"
+									   backgroundColor="#ff0000"/>
+						</mx:GridItem>
+					</mx:GridRow>
+					<mx:GridRow height="20%"
+								width="100%">
+						<mx:GridItem height="100%"
+									 width="100%">
+							<mx:Canvas height="100%"
+									   width="100%"
+									   alpha="0.7"
+									   backgroundColor="#d65f48"/>
+						</mx:GridItem>
+					</mx:GridRow>
+					<mx:GridRow height="20%"
+								width="100%">
+						<mx:GridItem height="100%"
+									 width="100%">
+							<mx:Canvas height="100%"
+									   width="100%"
+									   alpha="0.7"
+									   backgroundColor="#cfc505"/>
+						</mx:GridItem>
+					</mx:GridRow>
+				</mx:Grid>
+			</mx:backgroundElements>
+
+
+
+			
+			<mx:horizontalAxis>
+				<mx:CategoryAxis dataProvider="{expenses}"
+								 categoryField="Month"/>
+			</mx:horizontalAxis>
+			<mx:series>
+				<mx:LineSeries yField="Profit"
+							   displayName="Profit"/>
+				<mx:LineSeries yField="Expenses"
+							   displayName="Expenses"/>
+			</mx:series>
+		</mx:LineChart>
+		<mx:Legend dataProvider="{myChart}"/>
+	</mx:Panel> 
+</mx:Application>
+
