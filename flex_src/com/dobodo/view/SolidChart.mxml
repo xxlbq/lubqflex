@@ -35,6 +35,14 @@
 		}
 	]]>
 </mx:Script>
+
+    <mx:SolidColor id="sc1" color="blue" alpha=".3"/>
+    <mx:SolidColor id="sc2" color="red" alpha=".3"/>
+
+    <!-- Define custom Strokes for the columns. -->
+    <mx:Stroke id="s1" color="blue" weight="2"/>
+    <mx:Stroke id="s2" color="red" weight="2"/>
+
 	<mx:SeriesSlide id="slideIn" duration="600" direction="up"/>
     <mx:SeriesSlide id="slideOut" duration="200" direction="down"/>
 	<mx:ColumnChart horizontalCenter="true" fontSize="13.5" id="myChart" dataProvider="{expenses}" 
@@ -46,12 +54,21 @@
            <mx:CategoryAxis  dataProvider="{expenses}" categoryField="label" />
         </mx:horizontalAxis>
         <mx:series>
-           <mx:ColumnSeries displayName="save" showDataEffect="slideIn" hideDataEffect="slideOut" xField="label" yField="value" itemRenderer="com.dobodo.drawhelper.SolidSkin" />
-           
+           <mx:ColumnSeries displayName="save" showDataEffect="slideIn" hideDataEffect="slideOut" 
+           	xField="label" yField="value" itemRenderer="com.dobodo.drawhelper.SolidSkin" 
+           	                    fill="{sc1}"
+                    stroke="{s1}"/>
+           	
+           	
+           	
+           <mx:ColumnSeries displayName="loss" showDataEffect="slideIn" hideDataEffect="slideOut" 
+           	xField="label" yField="value" itemRenderer="com.dobodo.drawhelper.SolidSkin" 
+           	                    fill="{sc2}"
+                    stroke="{s2}"/>
         </mx:series>
      </mx:ColumnChart>
      
-   	<mx:Legend dataProvider="{myChart}"/>
+   	<mx:Legend dataProvider="{myChart}" />
        <mx:Label id="xMsg" text="{xLabel}" fontSize="14" width="95%" textAlign="center" letterSpacing="1.5">
      </mx:Label>
 <!--	 <mx:Legend id="lenged" x="{5 - lenged.width - 50}" y="5" visible="{(lengValue != '')}">

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:effects="com.dobodo.drawhelper.*"
+				layout="vertical"
+				verticalAlign="top"
+				horizontalAlign="center"
+				backgroundGradientColors="[0x000000,0x323232]"
+				paddingTop="0"
+				viewSourceURL="srcview/index.html">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.charts.events.ChartItemEvent;
+			import mx.controls.Alert;
+
+			import mx.charts.series.items.ColumnSeriesItem;
+			[Bindable]
+			private var medalsAC:ArrayCollection=new ArrayCollection([{Country: "USA", Gold: 35, Silver: 39, Bronze: 29}, {Country: "China", Gold: 32, Silver: 17, Bronze: 14}, {Country: "Russia", Gold: 27, Silver: 27, Bronze: 38}]);
+
+			private var downArray:ArrayCollection=new ArrayCollection([{Country: "California", Gold: 23.3}, {Country: "Japan", Gold: 23.4}, {Country: "South Korea", Gold: 33.3}, {Country: "England", Gold: 20}]);
+
+			private function displayGold(data:Object, field:String, index:Number, percentValue:Number):String
+			{
+				var temp:String=(" " + percentValue).substr(0, 6);
+				return data.Country + ": " + '/n' + "Total Gold: " + data.Gold + '/n' + temp + "%";
+			}
+
+			private function pieItemClick(evt:ChartItemEvent):void
+			{
+// Alert.show(""+JSON.encode(evt.hitSet),"tips");
+				var arr:Array=[];
+				arr[evt.hitData.chartItem.index]=0.2;
+				series.perWedgeExplodeRadius=arr;
+// chart.perWedgeExplodeRadius=arr;
+			}
+
+			private function pieItemDBClick(evt:ChartItemEvent):void
+			{ //drilldown
+// Alert.show("ds","tips");
+				chart.showDataTips=false;
+				series.setStyle("showDataEffect", drillDownEffect);
+				chart.dataProvider=downArray;
+
+				chart.removeEventListener(ChartItemEvent.ITEM_DOUBLE_CLICK, pieItemDBClick);
+				chart.addEventListener(MouseEvent.CLICK, drillUp);
+			}
+
+			private function drillUp(event:MouseEvent):void
+			{
+				chart.showDataTips=false;
+				series.setStyle("showDataEffect", drillUpEffect);
+				chart.dataProvider=medalsAC;
+
+				chart.addEventListener(ChartItemEvent.ITEM_DOUBLE_CLICK, pieItemDBClick);
+				chart.removeEventListener(MouseEvent.CLICK, drillUp);
+			}
+//piechart钻取(drilldown或者drillup，本质是数据的重新加载)
+		]]>
+	</mx:Script>
+	<!--动画效果-->
+	<effects:DrillDownEffect id="drillDownEffect"
+							 duration="1500"
+							 effectEnd="chart.showDataTips=true"/>
+	<effects:DrillUpEffect id="drillUpEffect"
+						   duration="1500"
+						   effectEnd="chart.showDataTips=true"/>
+
+
+	<mx:Panel title="PieChart Control"
+			  layout="vertical"
+			  color="0xffffff"
+			  borderAlpha="0.15"
+			  height="350"
+			  width="600"
+			  paddingTop="10"
+			  paddingRight="10"
+			  paddingBottom="10"
+			  paddingLeft="10"
+			  horizontalAlign="center">
+
+		<mx:PieChart id="chart"
+					 height="100%"
+					 width="100%"
+					 paddingRight="5"
+					 paddingLeft="5"
+					 color="0x323232"
+					 showDataTips="true"
+					 dataProvider="{medalsAC}"
+					 doubleClickEnabled="true"
+					 itemDoubleClick="pieItemDBClick(event);">
+
+			<mx:series>
+				<mx:PieSeries id="series"
+							  labelPosition="callout"
+							  field="Gold"
+							  labelFunction="displayGold"
+							  nameField="Country">
+					<mx:calloutStroke>
+						<mx:Stroke weight="0"
+								   color="0x888888"
+								   alpha="1.0"/>
+					</mx:calloutStroke>
+					<mx:radialStroke>
+						<mx:Stroke weight="0"
+								   color="#FFFFFF"
+								   alpha="0.20"/>
+					</mx:radialStroke>
+					<mx:stroke>
+						<mx:Stroke color="0"
+								   alpha="0.20"
+								   weight="2"/>
+					</mx:stroke>
+					<mx:filters>
+						<mx:Array/>
+					</mx:filters>
+				</mx:PieSeries>
+			</mx:series>
+		</mx:PieChart>
+
+		<mx:Legend dataProvider="{chart}"
+				   color="0x323232"
+				   direction="horizontal"
+				   horizontalGap="60"/>
+
+	</mx:Panel>
+</mx:Application>

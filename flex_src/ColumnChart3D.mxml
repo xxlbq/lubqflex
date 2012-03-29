@@ -69,13 +69,31 @@
 			<mx:ColumnChart id="cs"
 							width="70%"
 							height="80%" showDataTips="true" showAllDataTips="false">
+							
+				<mx:backgroundElements >
+      <!--  			<mx:GridLines  direction="both">
+        				<mx:horizontalStroke>
+		                    <mx:Stroke weight="3"/>
+		                </mx:horizontalStroke>
+		                <mx:verticalStroke>
+		                    <mx:Stroke weight="3"/>
+		                </mx:verticalStroke>
+		                <mx:horizontalFill>
+		                    <mx:SolidColor color="0x99033" alpha=".66"/>
+		                </mx:horizontalFill>
+        			</mx:GridLines>-->
+        			<mx:Image source="@Embed('back001.gif')" alpha=".2" />
+        			
+				</mx:backgroundElements>
+				
+				
 				<mx:horizontalAxis>
 					<mx:CategoryAxis id="haxis"
 									 categoryField="@name"/>
 				</mx:horizontalAxis>
 				<mx:series>
 					<mx:ColumnSeries maxWidth="20"
-									 yField="undo"
+									 yField="undo" 
 									 maxColumnWidth="25"
 									 displayName="@name">
 						<mx:itemRenderer>

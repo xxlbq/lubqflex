@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundColor="black">
+	<mx:states>
+		<mx:State name="can1State">
+			<mx:SetProperty target="{can3}" name="width" value="100"/>
+			<mx:SetProperty target="{can3}" name="height" value="100"/>
+			<mx:SetProperty target="{can3}" name="x" value="10"/>
+			<mx:SetProperty target="{can3}" name="y" value="120"/>
+			<mx:SetProperty target="{can1}" name="width" value="300"/>
+			<mx:SetProperty target="{can1}" name="height" value="300"/>
+			<mx:SetProperty target="{can1}" name="x" value="120"/>
+			
+			<mx:SetProperty target="{can2}" name="y" value="10"/>
+		</mx:State>
+		<mx:State name="can2State" basedOn="can1State">
+			<mx:SetProperty target="{can1}" name="width" value="100"/>
+			<mx:SetProperty target="{can1}" name="height" value="100"/>
+			<mx:SetProperty target="{can1}" name="x" value="10"/>
+			<mx:SetProperty target="{can1}" name="y" value="120"/>
+			
+			<mx:SetProperty target="{can2}" name="width" value="300"/>
+			<mx:SetProperty target="{can2}" name="height" value="300"/>
+			<mx:SetProperty target="{can2}" name="x" value="120"/>
+			
+			<mx:SetProperty target="{can3}" name="y" value="10"/>
+		</mx:State>
+	</mx:states>
+	<mx:Script>
+		<![CDATA[
+			import mx.effects.easing.Bounce;
+			[Bindable]
+			private var ss:*=can3;
+			
+			[Bindable]
+			private var up:*=can2;
+			
+			[Bindable]
+			private var down:*=can3;
+		]]>
+	</mx:Script>
+	<mx:Style>
+		Canvas{
+			borderThickness:"3";
+			 borderStyle:"solid";
+			 horizontalScrollPolicy:"off";
+			 verticalScrollPolicy:"off";
+		}
+	</mx:Style>
+	<mx:transitions>
+		<mx:Transition>
+			<mx:Parallel targets="{[can1,can2,can3]}">
+				<mx:Resize duration="200" easingFunction="Bounce.easeOut"/>
+				<mx:Move xTo="120" duration="500" yTo="10" target="{ss}"/>
+				<mx:Move xTo="10" yTo="10" duration="500" target="{up}"/>
+				<mx:Move xTo="10" yTo="120" duration="500" target="{down}"/>
+				<mx:Resize widthFrom="100" widthTo="300" heightFrom="100" heightTo="300" duration="1000" target="{ss}"/>
+				<mx:Sequence>
+					<mx:Blur duration="500" blurYFrom="1.0" blurYTo="20.0"/>
+					<mx:Blur duration="500" blurYFrom="20.0" blurYTo="1"/>
+				</mx:Sequence>
+			</mx:Parallel>
+		</mx:Transition>
+	</mx:transitions>
+	<mx:Canvas borderColor="red" backgroundColor="black"  id="can1" width="100" height="100" x="10" y="10" click="ss=can1;up=can2;down=can3;currentState='can1State';">
+		<mx:Image source="asset/1.jpg" width="100%" height="100%" scaleX="1" scaleY="1"/>
+	</mx:Canvas>
+	<mx:Canvas borderColor="green" backgroundColor="white" id="can2" width="100" height="100" x="10" y="120" click="ss=can2;up=can3;down=can1;currentState='can2State';">
+		<mx:Image source="asset/2.jpg" width="100%" height="100%"/>
+	</mx:Canvas>
+	<mx:Canvas borderColor="blue" backgroundColor="red" id="can3" width="300" height="300" x="120" y="10" click="ss=can3;up=can1;down=can2;currentState='';">
+		<mx:Image source="asset/3.jpg" width="100%" height="100%"/>
+	</mx:Canvas>
+</mx:Application>

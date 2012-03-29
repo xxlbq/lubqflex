@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	
+	xmlns:local="com.dobodo.drawhelper.*"
+	>
+	  <mx:Script>
+  <![CDATA[
+  	import mx.charts.chartClasses.IAxis;  
+     import mx.collections.ArrayCollection;  
+       
+  	  private function linearAxis_labelFunc(item:Object, prevValue:Object, axis:IAxis):String {
+      	return item + " 円";
+      }
+      
+   	  private function showData():void {
+      	return trace("data:"+mychart.dataProvider);
+      }
+  ]]>
+  
+
+  </mx:Script> 
+	
+
+	<mx:Panel title="LineChart and AreaChart Controls Example"
+			  height="300"
+			  width="700"
+			  layout="horizontal" x="61.5" y="106">
+			  
+		<mx:LineChart id="mychart"
+					  dataProvider="{dp}"
+					  height="100%"
+					  width="100%"
+					  paddingLeft="5"
+					  paddingRight="5"
+					  creationComplete="showData()" showDataTips="true" >
+
+			<mx:horizontalAxis>
+				<mx:CategoryAxis dataProvider="{dp}"
+								 categoryField="@HappenDate"/>
+			</mx:horizontalAxis>
+			
+			
+        	<!-- vertical axis -->
+	        <mx:verticalAxis>
+	            <mx:LinearAxis 
+	                    baseAtZero="false"
+	                    title="損益"
+	                    interval="10000"
+	                    labelFunction="linearAxis_labelFunc" />
+	        </mx:verticalAxis>
+	        
+	        
+			<mx:series>
+				<mx:LineSeries yField="@Profit"
+							   displayName="Profit"
+							   form="segment"
+							   radius="6"  baseline="">
+					<mx:itemRenderer >
+						<mx:Component>
+<!--							<mx:DiamondItemRenderer />-->
+						<local:MyLabel />
+						</mx:Component>
+					</mx:itemRenderer>
+
+				</mx:LineSeries>
+
+			</mx:series>
+
+		</mx:LineChart>
+  
+  </mx:Panel>
+  
+  
+	<mx:XMLListCollection id="dp" source="{cmtys.comtrys.quote}"/>
+	
+	    <mx:XML id="cmtys">
+    	<root>
+    	       <comtrys>
+    
+                <quote HappenDate="8/27/2007" Profit="10000"/>
+                <quote HappenDate="8/24/2007" Profit="20000"/>
+                <quote HappenDate="8/23/2007" Profit="-20000"/>
+                <quote HappenDate="8/22/2007" Profit="30000"/>
+                <quote HappenDate="8/21/2007" Profit="-50000"/>
+                <quote HappenDate="8/20/2007" Profit="70000"/>
+                <quote HappenDate="8/17/2007" Profit="-30000"/>
+
+	            </comtrys>
+	    </root>
+    	</mx:XML>
+
+    
+</mx:Application>

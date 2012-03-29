@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+				xmlns:component="deepen.core.component.*" xmlns:charts="charts.*" backgroundColor="white">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.charts.renderers.CircleItemRenderer;
+			import mx.collections.ArrayCollection;
+
+			[Bindable]
+			private var arr:ArrayCollection=new ArrayCollection([
+				{xname:'1月',yname:2000,y2name:800},
+				{xname:'2月',yname:1000,y2name:500},
+				{xname:'3月',yname:3000,y2name:700},
+				{xname:'4月',yname:4000,y2name:800},
+				{xname:'5月',yname:1300,y2name:800}]);
+
+			
+		]]>
+	</mx:Script>
+	<mx:LineChart id="myChart" seriesFilters="[]" 
+				  dataProvider="{arr}" 
+				  showDataTips="true"
+				  width="100%"
+				  height="100%">
+
+		<!--backgroundElements:背景设置-->
+		<mx:backgroundElements>
+			<mx:GridLines id="gridLines"
+						  direction="both" 
+						  horizontalTickAligned="false"
+						  verticalTickAligned="false">
+				<mx:verticalStroke>
+					<mx:Stroke color="#a6cecd"
+							   weight="1"
+							   alpha="0.4"/>
+				</mx:verticalStroke>
+				<mx:horizontalStroke>
+					<mx:Stroke color="#a6cecd"
+							   weight="1"
+							   alpha="0.6"/>
+				</mx:horizontalStroke>
+			</mx:GridLines>
+		</mx:backgroundElements>
+	
+		<!--categoryField：横坐标数据节点-->
+		<mx:horizontalAxis>
+			<mx:CategoryAxis id="h1" 
+							 categoryField="xname"
+							 title="发电利用小时"/>
+		</mx:horizontalAxis>
+
+		<mx:horizontalAxisRenderers>
+			<mx:AxisRenderer placement="bottom" axis="{h1}" />
+		</mx:horizontalAxisRenderers>
+
+		<!--纵坐标-->
+		<mx:verticalAxisRenderers>
+			<mx:AxisRenderer placement="left" axis="{v1}" />
+			<mx:AxisRenderer placement="right" axis="{v2}" />
+		</mx:verticalAxisRenderers>
+
+		<!--yField:纵坐标数据节点-->
+		<mx:series>
+
+			<!--纵坐标轴1-->
+			<mx:LineSeries id="cs1" horizontalAxis="{h1}" yField="yname" displayName="保本发电标煤单价">
+				<mx:verticalAxis>
+					<mx:LinearAxis id="v1" title="保本发电标煤单价"/>
+				</mx:verticalAxis>
+			</mx:LineSeries>
+
+			<!--纵坐标轴2-->
+			<mx:LineSeries id="cs2" horizontalAxis="{h1}" yField="y2name" displayName="保本售电单位变动成本">
+				<mx:verticalAxis>
+					<mx:LinearAxis id="v2" title="保本售电单位变动成本"/>
+				</mx:verticalAxis>
+			</mx:LineSeries>
+
+		</mx:series>
+
+	</mx:LineChart>
+</mx:Application>
+
