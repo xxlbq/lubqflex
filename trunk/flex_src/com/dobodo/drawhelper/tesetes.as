@@ -244,8 +244,8 @@ package com.dobodo.drawhelper
 				g.endFill();
 //			}
 			//画外弧              lubq@内部前分割面
-//			if ((pi / 2 <= startAngle && startAngle <= 3 * pi / 2))
-//			{
+			if ((pi / 2 <= startAngle && startAngle <= 3 * pi / 2))
+			{
 
 				g.lineStyle(0,drakColor,1)
 				g.beginFill(0xD8ECF, 1);
@@ -257,11 +257,11 @@ package com.dobodo.drawhelper
 				g.lineTo(endBPt.x, endBPt.y);
 				g.endFill();
 
-//			}
+			}
 
 			//画圆弧侧面
-//			if (((startAngle <= 2 * pi && startAngle >= pi) || (endAngle > pi)))
-//			{
+			if (((startAngle <= 2 * pi && startAngle >= pi) || (endAngle > pi)))
+			{
 				g.beginFill(drakColor, alp);
 				
 				g.moveTo(startTPt.x, startTPt.y);
@@ -285,16 +285,11 @@ package com.dobodo.drawhelper
 	
 				g.endFill();
 
-//			}
+			}
 
-
-			//lubq@-->
-
-			//lubq@<--
-			
 			
 			//画上面的
-			g.beginFill(fillColor, alp);
+			g.beginFill(fillColor, 1);
 			g.moveTo(endTPt.x, endTPt.y);
 			g.lineTo(origin.x, origin.y);
 			g.lineTo(startTPt.x, startTPt.y);

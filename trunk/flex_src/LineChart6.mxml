@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" 
 height="100%"> 
-  <mx:Script><![CDATA[ 
+  <mx:Script><![CDATA[
+  	import mx.charts.chartClasses.IAxis; 
      import mx.collections.ArrayCollection; 
      [Bindable] 
      public var expenses:ArrayCollection = new ArrayCollection([ 
@@ -9,6 +10,12 @@ height="100%">
         {Month:"Feb", Profit:1000, Expenses:200, Amount:600}, 
         {Month:"Mar", Profit:1500, Expenses:500, Amount:300} 
      ]); 
+     
+     
+      private function linearAxis_labelFunc(item:Object, prevValue:Object, axis:IAxis):String {
+      	return item + " sen";
+      }
+     
   ]]></mx:Script> 
 	<mx:Panel title="Line Chart"
 			  width="100%"
@@ -78,7 +85,15 @@ height="100%">
 
 
 
-			
+			<mx:verticalAxis>
+            	<mx:LinearAxis id="linearAxis"
+                    baseAtZero="false"
+                    title="Price (USD)"
+                    minorInterval="0.10"
+                    interval="200"
+                    labelFunction="linearAxis_labelFunc" />
+        	</mx:verticalAxis>
+        	
 			<mx:horizontalAxis>
 				<mx:CategoryAxis dataProvider="{expenses}"
 								 categoryField="Month"/>

@@ -5,10 +5,12 @@ import flash.display.Graphics;
 import flash.events.MouseEvent;
 import flash.filters.*;
 import flash.geom.Point;
-import flash.geom.Rectangle;
 
 import mx.charts.chartClasses.GraphicsUtilities;
+import mx.charts.chartClasses.Series;
+import mx.charts.series.PieSeries;
 import mx.charts.series.items.PieSeriesItem;
+import mx.charts.series.renderData.PieSeriesRenderData;
 import mx.core.IDataRenderer;
 import mx.core.UIComponent;
 import mx.graphics.IFill;
@@ -16,6 +18,10 @@ import mx.graphics.IStroke;
 import mx.graphics.SolidColor;
 
 
+/**
+ * 
+ * @author xxlbq
+ */
 public class PieChartSkin3D extends UIComponent implements IDataRenderer
 {
 
@@ -25,17 +31,21 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 	public var downColor:Number = 0xFF8822;
 	private var tracking:Boolean = false;
 	private var mouseState:String = "";
-    private var alp:Number=0.95;
+    private var alp:Number=1;
 //    private var alp:Number=0.60;
     private var mostate:Boolean=false;
     
     
-   		var tempalpha:Number = 0.4;
-   				var pi:Number=Math.PI;
+   		var tempalpha:Number = 1;
+   		var pi:Number=Math.PI;
 		var angle90:Number= pi/2;
 		var angle180:Number=pi;
 		var angle270:Number=pi/2*3;
-    
+
+	private var _wedge:PieSeriesItem;
+	private var _series:PieSeries;
+
+ 
 	public function PieChartSkin3D() 
 	{
 		super();
@@ -45,7 +55,6 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 		
 	}
 
-	private var _wedge:PieSeriesItem;
 	
 		
 	private function rollOverHandler(e:MouseEvent):void
@@ -96,11 +105,28 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 	public function set data(value:Object):void
 	{
 		_wedge = PieSeriesItem(value);
+		_series = value.element as PieSeries;
 		invalidateDisplayList();
 	}
+	
+	
+//	override protected function measure():void {
+//		super.measure();
+//		
+//	}
+	
 	override protected function updateDisplayList(unscaledWidth:Number,unscaledHeight:Number):void{
+		
+		
+		
 		super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+//	super.updateDisplayList(2 * _a, 2 * _b);
+
+
 		updateDisplay(alp);
+		updateLabelData();
+		
 	}
 	public function updateDisplay(alp:Number):void
 	{
@@ -116,11 +142,14 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 		
 		var startAngle:Number = _wedge.startAngle;
 		var endAngle:Number=startAngle+angle;
-		
+//		
 		var _a:Number=outerRadius;              //长轴 
-		var _b:Number=4*outerRadius/8;          //短轴
+		var _b:Number=outerRadius;          //短轴
+//		var _b:Number=4*outerRadius/8;          //短轴
+//		var _b:Number=5*outerRadius/8;          //短轴
 		
-		var h:Number=outerRadius/5;             //厚度	
+		
+		var h:Number=outerRadius/3;             //厚度	
 //		if(h>20){
 //			h=20;
 //		}
@@ -129,14 +158,17 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 
 		var step:Number=0;
 		
-
+//		if(_wedge.index > 1){
+//			return ;
+//		}
 		
 		
 		if (!_wedge)
 			return;
 
 		var fillColor:Number;
-		var fillColors:Array=[0xB2B6F5,0xE59490];
+//		var fillColors:Array=[0xB2B6F5,0xE59490];
+
 		if(!isNaN(color))	
 			fillColor = color;
 		else
@@ -147,6 +179,7 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 					fillColor = SolidColor(f).color;
 			}
 		}
+		
 //		recolor=fillColor;
 //		var hsv:Object;
 //	  hsv = ColorUtils.RGBToHSV(fillColor);
@@ -196,9 +229,9 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 						
 		outerRadius = Math.max(outerRadius, innerRadius);   //外半径
 		
-		var rc:Rectangle = new Rectangle(origin.x - _a,
-										 origin.y - _b,
-										 2 * _a, 2 * _b);
+//		var rc:Rectangle = new Rectangle(origin.x - _a,
+//										 origin.y - _b,
+//										 2 * _a, 2 * _b);
 		
 			
 		var startBPt:Point = new Point(
@@ -223,7 +256,7 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 		}
 		else{
 			
-			f.begin(g,rc);
+//			f.begin(g,rc);
 		}
 		
 		
@@ -242,6 +275,9 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 				,origin,outerRadius,innerRadius,h
 				,_a,_b,startAngle,angle180,angle180-startAngle
 				,drakColor,true);
+			
+			
+			
 			
 			var startBPt_split1 :Point = new Point();
 			startBPt_split1.x = origin.x - _a;
@@ -269,6 +305,10 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 		}
 
 
+		trace ("pie serise : labelx="+_wedge.element.labelContainer.width + ",labely="+_wedge.element.labelContainer.height);
+		
+		
+		
 	}
 
 	private function drawPie(g:Graphics,fillColor:Number,startBPt:Point,endBPt:Point,startTPt:Point,endTPt:Point,radialStroke:IStroke
@@ -279,16 +319,17 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 
 						
 		//画底部
-		g.beginFill(fillColor,tempalpha);	
+		g.beginFill(fillColor,0);	
 		g.moveTo(endBPt.x, endBPt.y);
 		GraphicsUtilities.setLineStyle(g, radialStroke);
 
 		if (innerRadius == 0)
 		{
+			
 			g.lineTo(origin.x, origin.y+h);
 			g.lineTo(startBPt.x, startBPt.y);
 		}
-		//GraphicsUtilities.setLineStyle(g, stroke);
+//		GraphicsUtilities.setLineStyle(g,  getStyle("stroke"));
 		GraphicsUtilities.drawArc(g, origin.x, origin.y+h,startAngle, angle, _a, _b, true);
 		g.endFill();
 			trace ("startAngle:"+ startAngle+",angle:"+angle + ",endangle:"+endAngle 
@@ -298,18 +339,18 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 		
 			//画内弧
 			if((startAngle<=pi/2&&startAngle>=0)||(startAngle>=3*pi/2&&startAngle<=2*pi)){
-			g.lineStyle(0,drakColor,1)
+			g.lineStyle(0,drakColor,0)
 			g.beginFill(drakColor,0);
 			g.moveTo(startBPt.x, startBPt.y);
 			g.lineTo(startTPt.x,startTPt.y);
 			
-			if(hideLine){
-				g.lineStyle(0,drakColor,0);
+//			if(hideLine){
+//				g.lineStyle(0,drakColor,1);
 				g.lineTo(origin.x,origin.y);
-				g.lineStyle(0,drakColor,1)
-			}else{
+				g.lineStyle(0,drakColor,0)
+//			}else{
 				g.lineTo(origin.x,origin.y);
-			}
+//			}
 
 			
 			g.lineTo(origin.x,origin.y+h);
@@ -322,17 +363,17 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 			if((pi/2<=startAngle&&startAngle<=3*pi/2)){
 				
 			g.lineStyle(0,drakColor,1)
-			g.beginFill(drakColor,0);
+			g.beginFill(drakColor,1);
 			g.moveTo(endBPt.x,endBPt.y);
 			g.lineTo(endTPt.x,endTPt.y);
 			
-			if(hideLine){
-				g.lineStyle(0,drakColor,0);
+//			if(hideLine){
+//				g.lineStyle(0,drakColor,1);
 				g.lineTo(origin.x,origin.y);
-				g.lineStyle(0,drakColor,1)
-			}else{
+//				g.lineStyle(0,drakColor,1)
+//			}else{
 				g.lineTo(origin.x,origin.y);
-			}
+//			}
 			
 			
 			g.lineTo(origin.x,origin.y+h);
@@ -344,7 +385,7 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 			//画圆弧侧面
 			if(((startAngle <=2*pi && startAngle>=pi)||( endAngle> pi))){
 				
-				g.beginFill(drakColor,alp);
+				g.beginFill(drakColor,1);
 			    g.moveTo(startTPt.x,startTPt.y);
 				GraphicsUtilities.drawArc(g, origin.x, origin.y,startAngle, angle,_a, _b, true);
 				g.lineTo(endTPt.x,endTPt.y);
@@ -359,10 +400,11 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 			
 			//画上面的
 	
-			g.beginFill(fillColor,alp);
+			g.beginFill(fillColor,1);
 			g.moveTo(endTPt.x,endTPt.y);
+			
 			if(hideLine){
-				g.lineStyle(0,fillColor,0);
+				g.lineStyle(0,fillColor,1);
 				g.lineTo(origin.x,origin.y);
 				g.lineTo(startTPt.x,startTPt.y);
 				
@@ -373,10 +415,19 @@ public class PieChartSkin3D extends UIComponent implements IDataRenderer
 			}
 			
 			GraphicsUtilities.drawArc(g, origin.x, origin.y,startAngle, angle,_a, _b, true);
+			
 			g.endFill();	
 		
+
 	
 	}
+	
+	private function updateLabelData():void {
+		var superSeries : Series = _series as Series ;
+		var pRenderDate : PieSeriesRenderData = superSeries.transitionRenderData as PieSeriesRenderData ;
+		trace ("=======");
+	}
+	
 	private function getDarkColor(color:uint):uint {
 	   var r:uint=color >> 16 & 0xFF / 1.5;
 	   var g:uint=color >> 8 & 0xFF / 1.2;

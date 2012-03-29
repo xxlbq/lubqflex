@@ -95,7 +95,7 @@ package com.dobodo.drawhelper
 						hsv = ColorUtils.RGBToHSV(fillColor);
 						hsv.v = Math.min(1,hsv.v*1.3);
 						hsv.s = hsv.s *.8;
-						//fillColor = ColorUtils.HSVToRGB(hsv);
+						fillColor = ColorUtils.HSVToRGB(hsv);
 						fillColor = overColor;
 					}
 					else
@@ -109,7 +109,7 @@ package com.dobodo.drawhelper
 						hsv = ColorUtils.RGBToHSV(fillColor);
 						hsv.v = hsv.v*.8;
 						hsv.s = hsv.s *.8;
-						//fillColor = ColorUtils.HSVToRGB(hsv);
+						fillColor = ColorUtils.HSVToRGB(hsv);
 						fillColor = downColor;
 					}
 					else
@@ -160,7 +160,8 @@ package com.dobodo.drawhelper
 			    g.endFill();
 			   //画右侧面
 			   colors = [fillColor,lighter];
-				alphas = [0.7,0.7];
+//				alphas = [0.7,0.7];
+				alphas = [1,1];
 				ratios = [0,255];
 			    matrix.createGradientBox(xx, he+xx, (270/180)*Math.PI, ox+wi-xx, oy+xx);
 				g.beginGradientFill("linear",colors,alphas,ratios,matrix);

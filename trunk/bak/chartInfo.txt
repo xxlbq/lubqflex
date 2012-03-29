@@ -1,0 +1,27 @@
+    <mx:ChartName>
+        <!-- 定义一个或多个序列 -->
+        <mx:SeriesName/>
+        <!-- 定义水平轴与竖直轴 -->
+        <mx:horizontalAxis>
+            <mx:axis_type/>
+        </mx:horizontalAxis>
+        <mx:verticalAxis>
+            <mx:axis_type/>
+        </mx:verticalAxis>
+        <!-- 定义样式 -->
+        <mx:horizontalAxisRenderers>
+            <mx:AxisRenderer/>
+        </mx:horizontalAxisRenderers>
+        <mx:verticalAxisRenderers>
+            <mx:AxisRenderer/>
+        </mx:verticalAxisRenderers/>
+        <!-- 添加框格线盒其它元素 -->
+        <mx:annotationElements>
+            <mx:Array/>
+        </mx:annotationElements>
+        <mx:backgroundElements>
+            <mx:Array/>
+        </mx:backgroundElements/>
+       </mx:ChartName>
+       <!-- 定义图例（可选） -->
+    <mx:Legend/>
