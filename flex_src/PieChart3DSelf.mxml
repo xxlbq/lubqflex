@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"  
+				xmlns:s="library://ns.adobe.com/flex/spark"
 			 layout="absolute" 
 			 xmlns:local="com.dobodo.drawhelper.*"
 			 initialize="aa()"
@@ -133,7 +134,11 @@ LegendItem{
 					   insideLabelSizeLimit="30" 
 					   nameField="@name"  textAlign="center"   outerRadius="0.5"  
 					   fontSize="30" color="#ffffff" fontFamily="Arial">
-					    
+				<mx:calloutStroke >
+                    <mx:Stroke color="green"
+                            weight="0" 
+                            caps="none" alpha="0.0"/>
+				</mx:calloutStroke>
 				<mx:fills>
 					<mx:Array>
 						<mx:Number>#4e7fbb</mx:Number><!-- blue -->
@@ -190,7 +195,7 @@ LegendItem{
 		                <country id="4" name="泰国" undo="16" finished="15"/>
 		                <country id="5" name="越南" undo="60" finished="15"/>
 						<country id="6" name="俄罗斯" undo="35" finished="15"/>
-						<country id="2" name="日本" undo="1" finished="7"/>
+						<country id="2" name="日本" undo="5" finished="7"/>
 						<country id="1" name="美国" undo="80" finished="32"/>
 						<country id="7" name="印度" undo="32" finished="15" />
 		                <country id="8" name="伊朗" undo="15" finished="15" />
