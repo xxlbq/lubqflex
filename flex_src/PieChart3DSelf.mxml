@@ -108,6 +108,8 @@ LegendItem{
 
 
 
+	<mx:Stroke id="invisiable_stroke"  weight=".5" alpha="0"/>
+
 	<!--	<effects:DrillDownEffect id="effD" duration="1500"  effectEnd="chart.mouseChildren = true;" />
 		<effects:DrillUpEffect id="effU" duration="1500" effectEnd="chart.mouseChildren = true;" />-->
 
@@ -117,18 +119,18 @@ LegendItem{
 			  showDataTips="true"
 				dataProvider="{cmtys.comtrys.comtury}"-->
 	<mx:Panel title="Pie Chart"
-				  width="800"
+				  width="600"
 				  height="400" backgroundAlpha="1" backgroundColor="#798f9a"  autoLayout="false" layout="horizontal">			
 	<mx:PieChart id="pieChart"
-			  width="300"
+			  width="50%"
 			  height="80%" 
-				dataProvider="{dataP}"  scaleY="0.5" scaleX="0.8" > 
+				dataProvider="{dataP}"  scaleY="0.5" scaleX="0.8"  x="50" y="50" paddingLeft="50"> 
 				   
 		<mx:series>
 			<mx:PieSeries id="pieSeries" field="@undo"
-					   labelPosition="insideWithCallout"    
+					   labelPosition="insideWithCallout" stroke="{invisiable_stroke}"
 					   filters="[]" 
-					   insideLabelSizeLimit="0.1" 
+					   insideLabelSizeLimit="30" 
 					   nameField="@name"  textAlign="center"   outerRadius="0.5"  
 					   fontSize="30" color="#ffffff" fontFamily="Arial">
 					    
@@ -149,9 +151,9 @@ LegendItem{
 <!--											<mx:radialStroke>
 												<mx:Stroke color="#000000" weight=".5" />
 											</mx:radialStroke>-->
-				<mx:stroke>
-					<mx:Stroke color="#000000" weight=".5" />
-				</mx:stroke>
+<!--				<mx:stroke>
+					<mx:Stroke color="#000000" weight=".5" alpha="0"/>
+				</mx:stroke>-->
 				<mx:itemRenderer>
 					<mx:Component>
 						<local:PieChartSkin3D />
@@ -162,6 +164,9 @@ LegendItem{
 		</mx:series>
 
 	</mx:PieChart>
+	
+	
+	
 	<mx:Legend dataProvider="{pieChart}"
 			width="50%" height="80%"  verticalAlign="bottom" paddingBottom="10" 
 				   verticalGap="18" />
